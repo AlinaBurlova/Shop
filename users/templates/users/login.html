@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Вход</title>
+{% endblock title %}
+
+{% block content %}
+
+<h2>Пожалуйста, войдите на сайт</h2>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary">Войти</button>
+</form>
+
+{% endblock content %}

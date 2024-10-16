@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{category.name}}</title>
+{% endblock title %}
+
+{% block content %}
+Категория - {{category.name}}
+<p>Краткая информация о категории</p>
+<p>6 случайных товаров из этой категории</p>
+
+<a href="{% url 'shop:category_update' slug=category.slug %}">Изменить категорию</a>
+<a href="{% url 'shop:category_delete' slug=category.slug %}">Удалить категорию</a>
+
+{% endblock content %}

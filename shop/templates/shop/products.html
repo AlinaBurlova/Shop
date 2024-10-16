@@ -7,7 +7,7 @@
 {% block content %}
 
 {% for product in products %}
-<p>Название - {{product.name}}</p>
+<p>Название - <a href="{{ product.get_absolute_url }}">{{product.name}}</a></p>
 <p>Цена - {{product.price}}</p>
 <p>Описание - {{product.description}}</p>
 <p>Категория - {{product.category}}</p>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{product.name}}</title>
+{% endblock title %}
+
+{% block content %}
+Товар - {{product.name}}
+<p>Краткая информация о товаре</p>
+
+<a href="{% url 'shop:product_update' slug=product.slug %}">Изменить товар</a>
+<a href="{% url 'shop:product_delete' slug=product.slug %}">Удалить товар</a>
+
+{% endblock content %}

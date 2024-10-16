@@ -1,0 +1,13 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}
+<title>Добавление товара</title>
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить товар</button>
+</form>
+{% endblock content %}
