@@ -134,3 +134,4 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 LOGIN_REDIRECT_URL = 'shop:products'
 LOGIN_URL = 'users:login'
+
