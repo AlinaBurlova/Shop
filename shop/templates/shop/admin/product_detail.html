@@ -5,10 +5,14 @@
 {% endblock title %}
 
 {% block content %}
-Товар - {{product.name}}
-<p>Краткая информация о товаре</p>
+<div>Наименование - {{product.name}}</div>
+<div>Описание - {{product.description}}</div>
+<div>Стоимость - {{product.price}}</div>
 
-<a href="{% url 'shop:product_update' slug=product.slug %}">Изменить товар</a>
+<p>Краткая информация о товаре</p>
+<div>6 случайных товаров из этой категории</div>
+
+<a href="{% url 'shop:product_edit' slug=product.slug %}">Изменить товар</a>
 <a href="{% url 'shop:product_delete' slug=product.slug %}">Удалить товар</a>
 
 {% endblock content %}
