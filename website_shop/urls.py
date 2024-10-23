@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', include('shop.urls')),
     path('users/', include('users.urls')),
+    path('cart/', include('cart.urls')),
     path('', IndexTemplateView.as_view(), name='main'),
 ]
 

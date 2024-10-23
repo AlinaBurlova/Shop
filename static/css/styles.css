@@ -188,6 +188,7 @@ footer {
 .card__btns {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 }
 
 .card__btns__btn {
