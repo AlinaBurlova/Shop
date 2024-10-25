@@ -2,7 +2,7 @@
 {% load static%}
 
 {% block content %}
-<table class="cart-title">
+<table class="cart-title" style="width:80%; text-align:justify; margin:0 auto;">
     <thead>
     <tr>
         <th>№</th>
@@ -19,7 +19,7 @@
     {% with product=item.product %}
     <tr>
         <td>
-            {{ product.id }}
+            {{ item.product.id }}
         </td>
         <td>
             {% if product.image %}
@@ -42,10 +42,10 @@
             {{ product.price }}
         </td>
         <td>
-            {{ product.quantity }}
+            {{ item.quantity }}
         </td>
         <td>
-            {{ product.total_price }}
+            {{ item.total_price }}
         </td>
     </tr>
     {% endwith %}
@@ -53,7 +53,8 @@
     </tbody>
 </table>
 <hr>
-<p>Всего товаров {{ cart.length }}</p>
+<div style="width:80%; text-align:justify; margin:0 auto;">
+<p>Всего товаров {{ cart|length }}</p>
 <p>Сумма товаров в корзине {{ cart.get_total_price }}</p>
-
+</div>
 {% endblock content %}

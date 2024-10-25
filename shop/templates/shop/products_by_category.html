@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block content %}
 
@@ -46,7 +47,12 @@
     </a>
       <div class="card__btns">
     <a href="{{ product.get_absolute_url }}" class="card__btns__btn">Подробнее</a>
-    <button class="card__btns__btn">В корзину</button>
+    {% if product.id|string_value in cart.cart %}
+          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">Добавлено {{cart|count_items:product.id|string_value}}</a>
+    {% else %}
+          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">В корзину</a>
+    {% endif %}
+
           </div>
   </div>
 </div>

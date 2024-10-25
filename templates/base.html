@@ -24,6 +24,7 @@
         <a href="{% url 'shop:products' %}">Товары</a>
         <a href="#">О нас</a>
         <a href="#">Контакты</a>
+        <a href="{% url 'cart:cart_detail' %}">Корзина ({{cart|length}})</a>
               </div>
         <div class="nav-item dropdown right">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

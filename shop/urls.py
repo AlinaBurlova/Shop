@@ -3,7 +3,8 @@ from .views import (ProductListView, ProductCreateView, ProductDetailView,
                     ProductUpdateView, ProductDeleteView,
                     CategoryCreateView, CategoryListView, CategoryDetailView,
                     CategoryUpdateView, CategoryDeleteView)
-from .views import IndexTemplateView, ProductListByCategory, product_search
+from .views import ProductListByCategory, product_search
+from cart.views import cart_add
 
 app_name = 'shop'
 
@@ -20,8 +21,9 @@ urlpatterns = [
     path('list/', ProductListView.as_view(), name='products'),
     path('add/', ProductCreateView.as_view(), name='product_add'),
     path('<slug:slug>/edit/', ProductUpdateView.as_view(), name='product_edit'),
+    path('<slug:slug>/addToCart/', cart_add, name='add_to_cart'),
     path('<slug:slug>/delete/', ProductDeleteView.as_view(), name='product_delete'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
 
-    path('', IndexTemplateView.as_view(), name='index'),
+    path('', ProductListByCategory.as_view(), name='index'),
 ]

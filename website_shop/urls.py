@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from shop.views import AdminTemplateView, IndexTemplateView
+from shop.views import AdminTemplateView, ProductListByCategory
 from website_shop import settings
 
 urlpatterns = [
@@ -26,7 +26,7 @@ urlpatterns = [
     path('product/', include('shop.urls')),
     path('users/', include('users.urls')),
     path('cart/', include('cart.urls')),
-    path('', IndexTemplateView.as_view(), name='main'),
+    path('', ProductListByCategory.as_view(), name='main'),
 ]
 
 if settings.DEBUG:

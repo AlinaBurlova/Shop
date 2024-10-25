@@ -8,6 +8,7 @@ User = get_user_model()
 class CartUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+
 class CartItem(models.Model):
     cart = models.ForeignKey(CartUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -16,6 +17,3 @@ class CartItem(models.Model):
 
     class Meta:
         ordering = ['-created']
-
-
-
