@@ -18,9 +18,9 @@
     {% for item in cart %}
     {% with product=item.product %}
     <tr>
-
+        <input type="hidden" value="{{product.id}}" id="productId">
         <td>
-            {{ item.product.id }}
+            {{ forloop.counter }}
         </td>
         <td>
             {% if product.image %}
@@ -40,13 +40,13 @@
             {{ product.name }}
         </td>
         <td>
-            {{ product.price }}
+            <span id="productPrice">{{ product.price|floatformat:0 }}</span> руб.
         </td>
         <td>
-            {{ item.quantity }}
+            <input id="prod_quantity" name="prod_quantity" type="number" min="1" max="100000" value="{{ item.quantity }}">
         </td>
         <td>
-            {{ item.total_price }}
+            <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span>  руб.
         </td>
     </tr>
     {% endwith %}
@@ -55,7 +55,73 @@
 </table>
 <hr>
 <div style="width:80%; text-align:justify; margin:0 auto;">
-<p>Всего товаров {{ cart|length }}</p>
-<p>Сумма товаров в корзине {{ cart.get_total_price }}</p>
+    <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
+    <div>Сумма товаров в корзине: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
 </div>
+
+<script>
+    function getTotalPriceCart(){
+    let itemPriceInputs = document.querySelectorAll("#itemPrice");
+    let totalPrice = 0;
+    itemPriceInputs.forEach((item, index)=>{
+        totalPrice += +item.textContent;
+        });
+    let totalPriceCart = document.querySelector("#totalPriceCart");
+    totalPriceCart.textContent = totalPrice;
+    return totalPrice;
+    }
+
+    function getQuantityInCart(){
+        let cartLengthHeader = document.querySelector("#cartLengthHeader")
+        let quantityInputs = document.querySelectorAll("#prod_quantity");
+        let allQuantity = 0;
+        quantityInputs.forEach((item,index)=>{
+            allQuantity += +item.value;
+        });
+        let cartLength = document.querySelector("#cartLength");
+        cartLength.textContent = allQuantity;
+        cartLengthHeader.textContent = allQuantity;
+        return allQuantity;
+    }
+
+    function updatePrice(event){
+        let quantity = event.target.value;
+        let itemPrice = event.target.parentElement.parentElement.querySelector("#itemPrice")
+        let productPrice = event.target.parentElement.parentElement.querySelector("#productPrice").textContent
+        productPrice = Number(productPrice.replace(",","."))
+
+        let newItemPrice = productPrice * quantity;
+        itemPrice.textContent = newItemPrice;
+        getQuantityInCart();
+        getTotalPriceCart();
+
+    };
+
+    async function saveCartInSession(event){
+        let productId = event.target.parentElement.parentElement.querySelector("#productId").value
+        let quantity = event.target.value;
+
+        let cartInfo = {
+            productIdValue: productId,
+            quantityValue: quantity,
+            totalQuantity: getQuantityInCart(),
+            totalPrice: getTotalPriceCart(),
+        };
+
+        let response = await fetch('/cart/update_cart_session/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify(cartInfo),
+        });
+
+    let result = await response.json();
+    };
+
+    const quantityInput = document.querySelectorAll("#prod_quantity")
+    quantityInput.forEach((item)=>{item.addEventListener('change', updatePrice)})
+    quantityInput.forEach((item)=>{item.addEventListener('change', saveCartInSession)})
+
+</script>
 {% endblock content %}
