@@ -115,3 +115,34 @@ def update_cart_by_front(request):
     return JsonResponse(response_data)
 
 
+def remove_product(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, pk=product_id)
+    cart.remove(product)
+
+    return redirect("cart:cart_detail")
+
+
+def remove_cart(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart:cart_detail")
+
+
+def get_cart_length(request):
+    cart = Cart(request)
+    cart_length = len(cart)
+    print(cart_length)
+    response_data = {"cart_length": cart_length}
+    return JsonResponse(response_data)
+
+
+@csrf_exempt
+def remove_product_ajax(request):
+    cart = Cart(request)
+    data = json.loads(request.body)
+    product_id = data.get('productIdValue')
+    product = get_object_or_404(Product, pk=product_id)
+    cart.remove(product)
+    response_data = {'result': 'success'}
+    return JsonResponse(response_data)

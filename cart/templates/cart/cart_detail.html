@@ -2,6 +2,7 @@
 {% load static%}
 
 {% block content %}
+{% if cart|length != 0%}
 <table class="cart-title" style="width:80%; text-align:justify; margin:0 auto;">
     <thead>
     <tr>
@@ -48,27 +49,83 @@
         <td>
             <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span>  руб.
         </td>
+        <td>
+           <a href="{% url 'cart:remove_product' product.id %}"><img style="width: 30px;" src="{% static 'img/cross.png' %}"></a>
+        </td>
+        <td><button class="removeFetch btn btn-danger" style="padding: 0.5px 5px; margin-top: 0;">***</button></td>
+
+
     </tr>
     {% endwith %}
     {% endfor %}
     </tbody>
 </table>
 <hr>
-<div style="width:80%; text-align:justify; margin:0 auto;">
+<div style="width:80%; text-align:justify; margin:0 auto; display: flex; justify-content: space-between; ">
+    <div style="flex-direction: column;">
     <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
     <div>Сумма товаров в корзине: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
+     <a href="{% url 'cart:remove_cart' %}" class="btn btn-secondary">Очистить корзину</a>
+     </div>
+        <a href="#" class="btn btn-primary" id="newOrder" style="height: fit-content; margin-top: auto">Оформить заказ</a>
 </div>
 
+
+{% else %}
+
+<div style="display: flex; justify-content: center; font-size: 2rem;">
+    Корзина пуста😭
+</div>
+
+{% endif %}
+
+
 <script>
-    function getTotalPriceCart(){
-    let itemPriceInputs = document.querySelectorAll("#itemPrice");
-    let totalPrice = 0;
-    itemPriceInputs.forEach((item, index)=>{
-        totalPrice += +item.textContent;
+    async function removeItemFetch(event){
+        let productId = event.target.parentElement.parentElement.querySelector("#productId").value
+
+        let itemInfo = {
+            productIdValue: productId,
+        };
+
+        let response = await fetch('/cart/remove_fetch/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify(itemInfo),
         });
-    let totalPriceCart = document.querySelector("#totalPriceCart");
-    totalPriceCart.textContent = totalPrice;
-    return totalPrice;
+        }
+
+    async function removeItem(event){
+        await removeItemFetch(event);
+        afterRemoveItem(event.target.parentElement.parentElement)
+        setTimeout(updatePrice.bind(null, event), 2000);
+    }
+
+    async function getCartLength(){
+        let response = await fetch('/cart/length/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+
+        });
+
+        let result = await response.json();
+        alert("Товаров в корзине: " + result.cart_length);
+    };
+
+
+    function getTotalPriceCart(){
+        let itemPriceInputs = document.querySelectorAll("#itemPrice");
+        let totalPrice = 0;
+        itemPriceInputs.forEach((item, index)=>{
+            totalPrice += +item.textContent;
+            });
+        let totalPriceCart = document.querySelector("#totalPriceCart");
+        totalPriceCart.textContent = totalPrice;
+        return totalPrice;
     }
 
     function getQuantityInCart(){
@@ -97,6 +154,10 @@
 
     };
 
+    function afterRemoveItem(item){
+        item.remove()
+    }
+
     async function saveCartInSession(event){
         let productId = event.target.parentElement.parentElement.querySelector("#productId").value
         let quantity = event.target.value;
@@ -118,10 +179,15 @@
 
     let result = await response.json();
     };
-
     const quantityInput = document.querySelectorAll("#prod_quantity")
     quantityInput.forEach((item)=>{item.addEventListener('change', updatePrice)})
     quantityInput.forEach((item)=>{item.addEventListener('change', saveCartInSession)})
+
+    const newOrderBtn = document.querySelector("#newOrder")
+    newOrderBtn.addEventListener('click', getCartLength)
+
+    const itemsRemove = document.querySelectorAll(".removeFetch")
+    itemsRemove.forEach((item)=>{item.addEventListener('click', removeItem)})
 
 </script>
 {% endblock content %}

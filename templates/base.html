@@ -24,7 +24,11 @@
         <a href="{% url 'shop:products' %}">Товары</a>
         <a href="#">О нас</a>
         <a href="#">Контакты</a>
+        {% if cart|length != 0 %}
         <a href="{% url 'cart:cart_detail' %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
+        {% else %}
+        <a href="{% url 'cart:cart_detail' %}">Корзина<span id="cartLengthHeader"></span></a>
+        {% endif %}
               </div>
         <div class="nav-item dropdown right">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
