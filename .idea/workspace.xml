@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82d43eae-c9e9-48cc-9ead-1162f529ffb1" name="Changes" comment="Add cart changes from 30.10">
+    <list default="true" id="82d43eae-c9e9-48cc-9ead-1162f529ffb1" name="Changes" comment="Add cart changes + new app 'orders' (from 30.10)">
       <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_11_2024,_19_12_[Changes]/shelved.patch" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_11_2024__19_12__Changes_.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.venv/bin/Activate.ps1" afterDir="false" />
@@ -5635,7 +5635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730313678252</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add cart changes + new app 'orders' (from 06.11)">
+      <option name="closed" value="true" />
+      <created>1730918751196</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1730918751196</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -5644,6 +5652,7 @@
     <MESSAGE value="Commit by 23.10" />
     <MESSAGE value="Add cart changes" />
     <MESSAGE value="Add cart changes from 30.10" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add cart changes from 30.10" />
+    <MESSAGE value="Add cart changes + new app 'orders' (from 30.10)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add cart changes + new app 'orders' (from 30.10)" />
   </component>
 </project>
