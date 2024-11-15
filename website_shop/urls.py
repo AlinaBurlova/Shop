@@ -26,6 +26,7 @@ urlpatterns = [
     path('product/', include('shop.urls')),
     path('users/', include('users.urls')),
     path('cart/', include('cart.urls')),
+    path('orders/', include('orders.urls')),
     path('', ProductListByCategory.as_view(), name='main'),
 ]
 

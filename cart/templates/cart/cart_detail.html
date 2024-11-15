@@ -67,7 +67,32 @@
     <div>Сумма товаров в корзине: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
      <a href="{% url 'cart:remove_cart' %}" class="btn btn-secondary">Очистить корзину</a>
      </div>
-        <a href="#" class="btn btn-primary" id="newOrder" style="height: fit-content; margin-top: auto">Оформить заказ</a>
+
+    <div style="padding-top: 10px">
+        <a href="#" class="btn btn-primary" id="newOrder">Оформить заказ</a>
+    </div>
+
+</div>
+
+<div id="orderModal" class="modal-my">
+    <div class="modal-content-my">
+        <span class="close" id="closeOrder">&times;</span>
+        <h4 style="margin-top: 7px;">Войдите или купите в 1 клик</h4>
+        <a href="#" id="login" class="btn btn-primary">Войти</a>
+        <a href="#" id="quickOrderBtn" class="btn btn-primary">Купить в 1 клик</a>
+    </div>
+</div>
+
+<div id="orderFormModal" class="modal-my__order-form">
+    <div class="modal-content-my__order-form">
+        <span class="close" id="closeOrderForm">&times;</span>
+        <h4>Заполните информацию о заказе</h4>
+        <form action="#" method="post">
+            {{ quick_order_form.as_p }}
+            {% csrf_token %}
+        <input type="button" id="createQuickOrderBtn" value="Оформить">
+        </form>
+    </div>
 </div>
 
 
@@ -184,10 +209,94 @@
     quantityInput.forEach((item)=>{item.addEventListener('change', saveCartInSession)})
 
     const newOrderBtn = document.querySelector("#newOrder")
-    newOrderBtn.addEventListener('click', getCartLength)
+    // newOrderBtn.addEventListener('click', getCartLength)
 
     const itemsRemove = document.querySelectorAll(".removeFetch")
     itemsRemove.forEach((item)=>{item.addEventListener('click', removeItem)})
+
+
+    // ===================== ORDER MODAL =====================
+    // Получаем элемент модального окна
+    const orderModal = document.getElementById("orderModal");
+    const orderFormModal = document.getElementById("orderFormModal");
+
+    // Получаем кнопку для открытия модального окна
+    const orderBtn = document.querySelector("#newOrder");
+    const quickOrderBtn = document.querySelector("#quickOrderBtn");
+
+    // Получаем элемент закрытия модального окна
+    const closeOrder = document.getElementById("closeOrder");
+    const closeOrderForm = document.getElementById("closeOrderForm");
+
+    // Открываем модальное окно для заказа
+    orderBtn.onclick = function() {
+        orderModal.style.display = "block";
+    }
+
+    // Открываем модальное окно для быстрого заказа
+    quickOrderBtn.onclick = function() {
+        orderFormModal.style.display = "block";
+        orderModal.style.display = "none";
+    }
+
+    // Закрытие модального окна для заказа
+    closeOrder.onclick = function() {
+        orderModal.style.display = "none";
+    }
+
+    // Закрываем модальное окно для быстрого заказа
+    closeOrderForm.onclick = function() {
+        orderFormModal.style.display = "none";
+    }
+
+    // Закрываем модальное окно при клике вне его области
+    window.onclick = function(event) {
+        if (event.target === orderModal) {
+            orderModal.style.display = "none";
+        }
+        if (event.target === orderFormModal) {
+            orderFormModal.style.display = "none";
+        }
+    }
+
+    // ===================== CREATE QUICK ORDER =====================
+    const createQuickOrderBtn = document.querySelector("#createQuickOrderBtn");
+
+    async function createQuickOrder(event){
+        const myForm = event.target.parentElement;
+        const name = myForm.name.value;
+        const lastName = myForm.last_name.value;
+        const email = myForm.email.value;
+        const phone = myForm.phone.value;
+        const payment = myForm.payment.value;
+        const delivery = myForm.delivery.value;
+
+        let orderInfo = {
+            "name": name,
+            "lastName": lastName,
+            "email": email,
+            "phone": phone,
+            "payment": payment,
+            "delivery": delivery,
+        };
+
+        let response = await fetch('/orders/new/quick/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify(orderInfo),
+        });
+
+    let result = await response.json();
+    alert('Заказ успешно создан!')
+    window.location.replace("{% url 'shop:index' %}");
+    };
+
+    createQuickOrderBtn.addEventListener('click', createQuickOrder)
+
+
+
 
 </script>
 {% endblock content %}

@@ -49,6 +49,7 @@ class Cart:
 
     # удаление товара из корзины
     def remove(self, product):
+
         product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]
@@ -110,6 +111,7 @@ class ProductCartUser:
             self.cart[product_id]['quantity'] += quantity
 
         self.save()
+
 
     # метод сохранения корзины
     def save(self):
@@ -202,12 +204,10 @@ def remove_product(request, product_id):
 
     return redirect("cart:cart_detail")
 
-
 def remove_cart(request):
     cart = Cart(request)
     cart.clear()
     return redirect("cart:cart_detail")
-
 
 def get_cart_length(request):
     cart = Cart(request)
