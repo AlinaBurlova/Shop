@@ -162,7 +162,6 @@ def cart_add(request, slug):
     else:
         cart = Cart(request)
 
-
     cart.add(product=product)
 
     return redirect('shop:index')
@@ -204,10 +203,12 @@ def remove_product(request, product_id):
 
     return redirect("cart:cart_detail")
 
+
 def remove_cart(request):
     cart = Cart(request)
     cart.clear()
     return redirect("cart:cart_detail")
+
 
 def get_cart_length(request):
     cart = Cart(request)

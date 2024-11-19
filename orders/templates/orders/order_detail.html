@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Информация о заказе</title>
+{% endblock title %}
+
+{% block content %}
+
+<h2>Заказ № {{ order.number }}</h2>
+<div class="order-item" style="display: flex; flex-direction: column;">
+        <div class="order-payment">Способ доставки: {{ order.payment }}</div>
+        <div class="order-delivery">Дата создания: {{ order.delivery }}</div>
+        <div class="order-date">Способ доставки: {{ order.created_at }}</div>
+</div>
+{% endblock content %}

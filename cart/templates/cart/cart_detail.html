@@ -69,8 +69,12 @@
      </div>
 
     <div style="padding-top: 10px">
+    {% if not request.user.id %}
         <a href="#" class="btn btn-primary" id="newOrder">Оформить заказ</a>
-    </div>
+    {% else %}
+        <a href="{% url 'new_order' %}" class="btn btn-primary" id="newOrderUser">Оформить</a>
+    {% endif %}
+        </div>
 
 </div>
 
@@ -94,7 +98,6 @@
         </form>
     </div>
 </div>
-
 
 {% else %}
 
