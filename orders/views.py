@@ -7,12 +7,17 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
+from django.contrib.auth import get_user_model
 
 from .models import Order, OrderItem
 from .forms import OrderForm
 from cart.views import Cart, ProductCartUser
 from cart.models import CartItem
 from shop.models import Product
+
+
+user = get_user_model()
+admin = user.objects.get(username='staff')
 
 
 @csrf_exempt
@@ -81,31 +86,47 @@ def new_order(request):
         return render(request, template_name='orders/order_create.html', context=context)
 
 
-# @login_required
-# def orders_list(request):
-#     orders = Order.objects.filter(user=request.user)
-#     context = {"orders": orders}
-#
-#     return render(request, template_name='orders/orders.html', context=context)
-#
-#
-# def order_detail(request, number):
-#     order = get_object_or_404(Order, number=number, user=request.user)
-#     context = {"order": order}
-#
-#     return render(request, template_name='orders/order_detail.html', context=context)
+@login_required
+def orders_list(request):
+    orders = Order.objects.filter(user=request.user)
+    context = {"orders": orders}
+
+    return render(request, template_name='orders/orders.html', context=context)
+
+@login_required
+def order_detail(request, number):
+    if request.user == admin:
+        order = get_object_or_404(Order, number=number)
+        context = {"order": order}
+        return render(request, template_name='orders/order_detail.html', context=context)
+
+    order = get_object_or_404(Order, number=number, user=request.user)
+    context = {"order": order}
+
+    return render(request, template_name='orders/order_detail.html', context=context)
 
 
-@method_decorator(login_required, name='dispatch')
-class OrderListView(ListView):
-    model = Order
-    template_name = 'orders/orders.html'
-    context_object_name = 'orders'
+# class OrderListView(ListView):
+#     model = Order
+#     template_name = 'shop/admin/orders.html'
+#     context_object_name = 'orders'
+#
+#
+# class OrderDetailView(DetailView):
+#     model = Order
+#     template_name = 'orders/order_detail.html'
+#     context_object_name = 'order'
+#     slug_field = 'number'
+#     slug_url_kwarg = 'number'
 
+def all_order_list(request):
+    pass
+    if request.user != admin:
+        raise PermissionError
 
-class OrderDetailView(DetailView):
-    model = Order
-    template_name = 'orders/order_detail.html'
-    context_object_name = 'order'
-    slug_field = 'number'
-    slug_url_kwarg = 'number'
+    print(type(admin))
+
+    orders = Order.objects.all()
+    context = {"orders": orders}
+
+    return  render(request, template_name='shop/admin/orders.html', context=context)
