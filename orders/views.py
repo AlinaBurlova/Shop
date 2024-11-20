@@ -4,8 +4,9 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, redirect, reverse, render
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import JsonResponse
-
+from django.views.generic import ListView, DetailView
 
 from .models import Order, OrderItem
 from .forms import OrderForm
@@ -80,16 +81,31 @@ def new_order(request):
         return render(request, template_name='orders/order_create.html', context=context)
 
 
-@login_required
-def orders_list(request):
-    orders = Order.objects.filter(user=request.user)
-    context = {"orders": orders}
+# @login_required
+# def orders_list(request):
+#     orders = Order.objects.filter(user=request.user)
+#     context = {"orders": orders}
+#
+#     return render(request, template_name='orders/orders.html', context=context)
+#
+#
+# def order_detail(request, number):
+#     order = get_object_or_404(Order, number=number, user=request.user)
+#     context = {"order": order}
+#
+#     return render(request, template_name='orders/order_detail.html', context=context)
 
-    return render(request, template_name='orders/orders.html', context=context)
+
+@method_decorator(login_required, name='dispatch')
+class OrderListView(ListView):
+    model = Order
+    template_name = 'orders/orders.html'
+    context_object_name = 'orders'
 
 
-def order_detail(request, number):
-    order = get_object_or_404(Order, number=number, user=request.user)
-    context = {"order": order}
-
-    return render(request, template_name='orders/order_detail.html', context=context)
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = 'orders/order_detail.html'
+    context_object_name = 'order'
+    slug_field = 'number'
+    slug_url_kwarg = 'number'
