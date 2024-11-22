@@ -127,6 +127,11 @@ class ProductCartUser:
             else:
                 CartItem.objects.create(cart=self.user_cart, product=product, quantity=self.cart[prod_id]['quantity'])
 
+    def clear(self):
+        self.cart.clear()
+        self.save()
+
+
     def remove(self, product_id, request):
         product = Product.objects.get(pk=product_id)
         cart_user = CartUser.objects.get(user=request.user)

@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="container">
+    <div class="left">
         <aside class="sidebar">
             <h2>Категории товаров</h2>
             <ul>
@@ -13,7 +14,13 @@
                 {% endfor %}
             </ul>
         </aside>
-
+        <div class="filters">
+            <form method="get">
+                {{ filterset.form.as_p }}
+                <button type="submit" class="btn btn-primary">Фильтровать</button>
+            </form>
+        </div>
+        </div>
         <main class="product-list">
             <h2>Товары</h2>
             <div class="products">

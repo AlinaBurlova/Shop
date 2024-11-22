@@ -1,3 +1,5 @@
+
+
 from django.views.generic import (ListView, CreateView,
                                   UpdateView, DetailView,
                                   DeleteView, TemplateView)
@@ -8,6 +10,7 @@ from django.shortcuts import get_object_or_404, render
 
 from .models import Product, Category
 from .forms import CategoryCreateForm, ProductCreateForm
+from .filters import ProductFilter
 
 
 class AdminTemplateView(TemplateView):
@@ -29,16 +32,22 @@ class ProductListByCategory(ListView):
         context = super().get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
+        context['filterset'] = self.filterset
 
         return context
 
     def get_queryset(self):
         if not self.kwargs.get('slug'):
-            return Product.objects.all()
+            queryset = Product.objects.all()
+            self.filterset = ProductFilter(self.request.GET, queryset)
+            return self.filterset.qs
 
         # Получаем категорию по slug из URL
         category = get_object_or_404(Category, slug=self.kwargs['slug'])
-        return Product.objects.filter(category=category)
+        queryset = Product.objects.filter(category=category)
+        self.filterset = ProductFilter(self.request.GET, queryset)
+
+        return self.filterset.qs
 
 
 class ProductCreateView(CreateView):
@@ -125,3 +134,17 @@ def product_search(request):
     return render(request, template_name="shop/products_by_category.html", context=context)
 
 
+# def product_list_view(request, slug):
+#     categories = Category.objects.all()
+#     if slug:
+#         category = get_object_or_404(Category, slug=slug)
+#         products_by_category = Product.objects.filter(category=category)
+#         filterset = ProductFilter(request.GET, queryset=products_by_category)
+#         context = {"products": filterset.qs, 'filterset': filterset, "categories": categories}
+#         return render(request, template_name="shop/products_by_category.html", context=context)
+#
+#     queryset = Product.objects.all()
+#     filterset = ProductFilter(request.GET, queryset=queryset)
+#     context = {"products": filterset.qs, 'filterset': filterset, "categories": categories}
+#
+#     return render(request, template_name="shop/products_by_category.html", context=context)

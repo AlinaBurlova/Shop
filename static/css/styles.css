@@ -287,3 +287,30 @@ footer {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+.filters {
+    margin-top: 2rem;
+}
+
+.filters p {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    justify-content: space-between;
+}
+
+.filters input {
+    width: 60%;
+}
+
+.filters input[type=number] {
+    width: 30%;
+    margin-left: auto;
+}
+
+.filters input[type=checkbox] {
+    height: 20px;
+    width: 10%;
+    margin-left: auto;
+}
