@@ -48,14 +48,16 @@ body {
 .container {
     display: flex;
     margin: 20px;
+    align-items: flex-start;
 }
 
-
+.left-small {
+    display: none;
+}
 
 
 .product-list {
 	width: 75%;
-	padding: 20px;
 	margin-left: 5%;
 }
 
@@ -83,12 +85,16 @@ body {
 
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     background-color: #333;
     color: white;
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+footer p {
+    margin-bottom: 0;
 }
 
 
@@ -304,6 +310,10 @@ footer {
     width: 60%;
 }
 
+.filters label {
+    margin-right: 5px;
+}
+
 .filters input[type=number] {
     width: 30%;
     margin-left: auto;
@@ -314,3 +324,151 @@ footer {
     width: 10%;
     margin-left: auto;
 }
+
+
+.search {
+    margin-top: 4vh;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+@media screen and (max-width: 800px) {
+   .header .left {
+    display: none;
+   }
+
+   .left-small {
+    display: block;
+    }
+
+    .product-list {
+    width: 50%;
+    }
+
+    .filters {
+    width: 150px;
+    }
+}
+
+
+@media screen and (max-width: 550px) {
+   .card {
+  width: 150px;
+  min-height: 70px;
+   }
+
+.card__top {
+  flex: 0 0 130px;
+}
+
+.card__prices {
+  flex: 0 0 0;
+}
+
+.card__price {
+  font-size: 13px;
+}
+
+.card__category {
+font-size: 7px;
+}
+
+.card__title {
+  font-size: 15px;
+}
+
+.card__btns {
+  margin-bottom: 0;
+}
+
+.card__btns__btn {
+  font-size: 7px;
+  padding: 6px;
+}
+
+footer p {
+font-size: 12px;
+}
+}
+
+
+@media screen and (max-width: 420px) {
+   .container {
+  flex-direction: column;
+  align-items: center;
+   }
+
+   .container .left{
+   display: flex;
+   gap: 12px;
+   padding-left: 0;
+   margin-top: 10px;
+   }
+
+   .sidebar {
+    font-size: 12px;
+   }
+
+   .sidebar h2{
+    font-size: 17px;
+   }
+
+    .filters {
+    display: flex;
+    flex-direction: row;
+    margin-top: .5rem;
+    }
+
+   .filters form{
+    flex-wrap: wrap;
+   }
+
+   .filters p {
+   font-size: 12px;
+   width: 100%;
+   height: 15px;
+   align-items: center;
+   margin-bottom: .75rem;
+   }
+
+   .filters button {
+   margin-top: 0;
+   padding: 5px;
+   font-size: 10px;
+   }
+
+   .product-list{
+   margin-top: 10px;
+   margin-left: 0;
+   }
+
+   .product-list h2{
+   margin-bottom: 0;
+   text-align: center;
+   }
+
+   .cards {
+   margin: 1.5rem auto;
+   row-gap: 20px;
+   }
+
+   .search  {
+    margin-right: 17%;
+}
+
+ .search input {
+    height: 20px;
+ }
+
+  .search button {
+    font-size: 10px;
+ }
+
+}
+
+

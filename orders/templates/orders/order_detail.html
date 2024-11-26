@@ -13,4 +13,13 @@
         <div class="order-delivery">Дата создания: {{ order.delivery }}</div>
         <div class="order-date">Способ доставки: {{ order.created_at }}</div>
 </div>
+<h2>Товары в заказе:</h2>
+{% for item in order_items %}
+<div class="item">
+        <div>Наименование: {{ item.product.name }}</div>
+        <div>Количество: {{ item.quantity }}</div>
+        <hr>
+</div>
+{% endfor %}
+
 {% endblock content %}
