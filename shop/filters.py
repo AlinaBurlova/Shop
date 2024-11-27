@@ -1,5 +1,3 @@
-from zoneinfo import available_timezones
-
 import django_filters
 
 from django.db.models import Max
