@@ -25,7 +25,7 @@ urlpatterns = [
     path('staff/orders/', all_order_list, name="admin_all_orders"),
     path('staff/', AdminTemplateView.as_view(), name="admin-page"),
     path('admin/', admin.site.urls),
-    path('product/', include('shop.urls')),
+    path('products/', include('shop.urls')),
     path('users/', include('users.urls')),
     path('cart/', include('cart.urls')),
     path('orders/', include('orders.urls')),

@@ -1,5 +1,3 @@
-
-
 from django.views.generic import (ListView, CreateView,
                                   UpdateView, DetailView,
                                   DeleteView, TemplateView)
@@ -91,6 +89,11 @@ class CategoryCreateView(CreateView):
     form_class = CategoryCreateForm
     template_name = 'shop/admin/category_add.html'
     success_url = reverse_lazy('shop:categories')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = 'categories'
+        return context
 
 
 class CategoryListView(ListView):

@@ -17,7 +17,7 @@ from shop.models import Product
 
 
 user = get_user_model()
-admin = user.objects.get(username='admin')
+
 
 
 @csrf_exempt
@@ -88,6 +88,12 @@ def new_order(request):
 
 @login_required
 def orders_list(request):
+    admin = user.objects.get(username='staff')
+    if request.user == admin:
+        orders = Order.objects.all()
+        context = {"orders": orders}
+        return render(request, template_name='orders/orders.html', context=context)
+
     orders = Order.objects.filter(user=request.user)
     context = {"orders": orders}
 
@@ -95,9 +101,11 @@ def orders_list(request):
 
 @login_required
 def order_detail(request, number):
+    admin = user.objects.get(username='staff')
     if request.user == admin:
         order = get_object_or_404(Order, number=number)
-        context = {"order": order}
+        order_items = order.order_items.all()
+        context = {"order": order, "order_items": order_items}
         return render(request, template_name='orders/order_detail.html', context=context)
 
     order = get_object_or_404(Order, number=number, user=request.user)
@@ -121,6 +129,7 @@ def order_detail(request, number):
 #     slug_url_kwarg = 'number'
 
 def all_order_list(request):
+    admin = user.objects.get(username='staff')
     if request.user != admin:
         raise PermissionError
 
