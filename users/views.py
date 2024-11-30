@@ -28,8 +28,8 @@ def register(request):
     }
     return render(request, template_name='users/register.html', context=context)
 
-
 def log_in(request):
+
     form = AuthenticationForm(request, request.POST)
     if form.is_valid():
         username = form.cleaned_data['username']

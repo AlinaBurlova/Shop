@@ -1,6 +1,7 @@
 from django.views.generic import (ListView, CreateView,
                                   UpdateView, DetailView,
                                   DeleteView, TemplateView)
+from django.core.paginator import Paginator
 
 from django.urls import reverse_lazy
 from django.db.models import Q
@@ -20,11 +21,11 @@ class AdminTemplateView(TemplateView):
     #     return context
 
 
-
 class ProductListByCategory(ListView):
     model = Product
     template_name = 'shop/products_by_category.html'
     context_object_name = 'products'
+    paginate_by = 3  # Количество продуктов на странице
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,14 +38,12 @@ class ProductListByCategory(ListView):
     def get_queryset(self):
         if not self.kwargs.get('slug'):
             queryset = Product.objects.all()
-            self.filterset = ProductFilter(self.request.GET, queryset)
-            return self.filterset.qs
+        else:
+            # Получаем категорию по slug из URL
+            category = get_object_or_404(Category, slug=self.kwargs['slug'])
+            queryset = Product.objects.filter(category=category)
 
-        # Получаем категорию по slug из URL
-        category = get_object_or_404(Category, slug=self.kwargs['slug'])
-        queryset = Product.objects.filter(category=category)
         self.filterset = ProductFilter(self.request.GET, queryset)
-
         return self.filterset.qs
 
 
@@ -68,6 +67,8 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
+
+
 class ProductUpdateView(UpdateView):
     model = Product
     template_name = 'shop/admin/product_edit.html'
@@ -82,6 +83,10 @@ class ProductDeleteView(DeleteView):
     template_name = 'shop/admin/product_delete.html'
     success_url = reverse_lazy('shop:products')
     slug_url_kwarg = 'slug'
+
+
+
+
 
 
 class CategoryCreateView(CreateView):
