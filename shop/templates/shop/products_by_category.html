@@ -22,7 +22,12 @@
         </div>
         </div>
         <main class="product-list">
+            <div class="up">
             <h2>Товары</h2>
+                  <div class="current">
+      Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+      </div>
+                </div>
             <div class="products">
     <div class="cards">
 {% for product in products %}
@@ -85,9 +90,7 @@
     </span>
 
   </ul>
-      <div class="current" style="margin-bottom: 20px;">
-      Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-      </div>
+
 </div>
         </main>
     </div>

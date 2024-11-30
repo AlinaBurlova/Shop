@@ -3,7 +3,7 @@ from .views import (ProductListView, ProductCreateView, ProductDetailView,
                     ProductUpdateView, ProductDeleteView,
                     CategoryCreateView, CategoryListView, CategoryDetailView,
                     CategoryUpdateView, CategoryDeleteView)
-from .views import ProductListByCategory, product_search
+from .views import ProductListByCategory, product_search, about, contacts
 # from .views import product_list_view
 from cart.views import cart_add
 
@@ -11,6 +11,7 @@ app_name = 'shop'
 
 urlpatterns = [
     # path('categories/<slug:slug>/products/test/', product_list_view, name='test'),
+
     path('categories/add/', CategoryCreateView.as_view(), name='category_add'),
     path('categories/<slug:slug>/edit/', CategoryUpdateView.as_view(), name='category_edit'),
     path('categories/<slug:slug>/delete/', CategoryDeleteView.as_view(), name='category_delete'),
@@ -20,6 +21,7 @@ urlpatterns = [
 
     path('search/', product_search, name='product_search'),
 
+
     path('list/', ProductListByCategory.as_view(), name='products'),
     path('add/', ProductCreateView.as_view(), name='product_add'),
     path('<slug:slug>/edit/', ProductUpdateView.as_view(), name='product_edit'),
@@ -27,5 +29,9 @@ urlpatterns = [
     path('<slug:slug>/delete/', ProductDeleteView.as_view(), name='product_delete'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
 
+    path('about/', about, name='about'),
+    path('contacts/', contacts, name='contacts'),
     path('', ProductListByCategory.as_view(), name='index'),
+
+
 ]

@@ -229,7 +229,8 @@ footer p {
   justify-items: center;
   column-gap: 30px;
   row-gap: 40px;
-  margin: 2.50rem auto;
+  margin: 1.50rem auto;
+  margin-bottom: 1rem;
 }
 
 
@@ -327,7 +328,7 @@ footer p {
 
 
 .search {
-    margin-top: 4vh;
+    margin-top: 2.5vh;
     float: right;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -336,6 +337,11 @@ footer p {
     gap: 10px;
 }
 
+.up {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 @media screen and (max-width: 800px) {
    .header .left {

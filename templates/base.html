@@ -40,8 +40,8 @@
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
               <a class="dropdown-item"  href="{% url 'shop:categories' %}">Категории</a>
             <a class="dropdown-item"  href="{% url 'shop:products' %}">Товары</a>
-            <a class="dropdown-item"  href="#">О нас</a>
-            <a class="dropdown-item"  href="#">Контакты</a>
+            <a class="dropdown-item"  href="{% url 'shop:about' %}">О нас</a>
+            <a class="dropdown-item"  href="{% url 'shop:contacts' %}">Контакты</a>
             {% if cart|length != 0 %}
             <a class="dropdown-item"  href="{% url 'cart:cart_detail' %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
              {% else %}

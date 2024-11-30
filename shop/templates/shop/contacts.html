@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Это Html-страничка о контактах</h2>
+
+<h2>Контакты</h2>
+<div class="main__contacts">
+  <section class="main__contacts__text">
+    <p>Автор: {{lastname}} {{name}}</p>
+    <p>Email: {{email}}</p>
+    <p>Адрес: {{address}}</p>
+  </section>
+  <div style="position: relative; overflow: hidden">
+    <a
+      href="https://yandex.ru/maps/2/saint-petersburg/?utm_medium=mapframe&utm_source=maps"
+      style="color: #eee; font-size: 12px; position: absolute; top: 0px"
+      >Санкт‑Петербург</a
+    ><a
+      href="https://yandex.ru/maps/2/saint-petersburg/stops/station__9898637/?ll=30.379296%2C59.870206&tab=overview&utm_medium=mapframe&utm_source=maps&z=15"
+      style="color: #eee; font-size: 12px; position: absolute; top: 14px"
+      >Международная — Яндекс Карты</a
+    ><iframe
+      src="https://yandex.ru/map-widget/v1/?ll=30.379296%2C59.870206&masstransit%5BstopId%5D=station__9898637&mode=masstransit&tab=overview&z=15"
+      width="560"
+      height="350"
+      frameborder="1"
+      allowfullscreen="true"
+      style="position: relative"
+    ></iframe>
+  </div>
+</div>
+
+{% endblock content %}

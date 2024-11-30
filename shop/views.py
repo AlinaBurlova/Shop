@@ -10,6 +10,9 @@ from django.shortcuts import get_object_or_404, render
 from .models import Product, Category
 from .forms import CategoryCreateForm, ProductCreateForm
 from .filters import ProductFilter
+from django.contrib.auth import get_user_model
+
+
 
 
 class AdminTemplateView(TemplateView):
@@ -104,10 +107,45 @@ class CategoryListView(ListView):
 
 class CategoryDetailView(DetailView):
     model = Category
-    template_name = 'shop/admin/category_detail.html'
     context_object_name = 'category'
     slug_url_kwarg = 'slug'
 
+    def get_template_names(self):
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+        if self.request.user == admin:
+            return ['shop/admin/category_detail.html']
+        else:
+            return ['shop/category_detail.html']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.object
+        products = category.products.all()[:2]  # Измените на правильное имя, если у вас есть related_name
+        context['products'] = products
+
+        return context
+
+
+def about(request):
+    context = {
+        'name': 'Дмитрий',
+        'lastname': 'Горин',
+        'email': 'd.gorin@yandex.ru',
+        'title': "О сайте"
+    }
+    return render(request, template_name='shop/about.html', context=context)
+
+
+def contacts(request):
+    context = {
+        "title": "Контакты",
+        "lastname": "Бурлова",
+        "name": "Алина",
+        "email": "alina-burlova@mail.ru",
+        "address": "м. Международная",
+    }
+    return render(request, template_name="shop/contacts.html", context=context)
 
 class CategoryUpdateView(UpdateView):
     model = Category
@@ -153,13 +191,13 @@ def product_search(request):
 #     return render(request, template_name="shop/products_by_category.html", context=context)
 
 def forbidden(request, exception):
-    return render(request, "shop/403.html", status=403)
+    return render(request, "403.html", status=403)
 
 
 def page_not_found(request, exception):
-    return render(request, "shop/404.html", status=404)
+    return render(request, "404.html", status=404)
 
 
 def server_error(request):
-    return render(request, "shop/500.html", status=500)
+    return render(request, "500.html", status=500)
 

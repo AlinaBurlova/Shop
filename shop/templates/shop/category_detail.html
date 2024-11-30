@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+<title>{{category.name}}</title>
+{% endblock title %}
+
+{% block content %}
+<h1>ЭТО ДЛЯ ПОЛЬЗОВАТЕЛЯ</h1>
+
+Категория - {{category.name}}
+<p>Краткая информация о категории</p>
+<p>6 случайных товаров из этой категории</p>
+
+<h2>Товары из этой категории:</h2>
+
+    {% if category.id|is_even %}
+    <p>ID категории {{ category.id }} четный.</p>
+{% else %}
+    <p>ID категории {{ category.id }} нечетный.</p>
+{% endif %}
+<ul>
+
+    {% if category.name == "Бытовые товары" %}
+    <img src="{% static 'img/menu.png' %}" alt="Изображение для Категории 1">
+{% elif category.name == "Обувь" %}
+    <img src="{% static 'img/people.png' %}" alt="Изображение для Категории 2">
+{% else %}
+    <img src="{% static 'img/cross.png' %}" alt="Изображение по умолчанию">
+{% endif %}
+
+    {% for product in products %}
+        <li>{{ product.name }} - {{ product.price }}</li>
+    {% empty %}
+        <li>На даннный момент нет товаров в этой категории.</li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock content %}
