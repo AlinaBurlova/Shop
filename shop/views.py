@@ -84,11 +84,6 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy('shop:products')
     slug_url_kwarg = 'slug'
 
-
-
-
-
-
 class CategoryCreateView(CreateView):
     model = Category
     form_class = CategoryCreateForm
@@ -156,3 +151,15 @@ def product_search(request):
 #     context = {"products": filterset.qs, 'filterset': filterset, "categories": categories}
 #
 #     return render(request, template_name="shop/products_by_category.html", context=context)
+
+def forbidden(request, exception):
+    return render(request, "shop/403.html", status=403)
+
+
+def page_not_found(request, exception):
+    return render(request, "shop/404.html", status=404)
+
+
+def server_error(request):
+    return render(request, "shop/500.html", status=500)
+
