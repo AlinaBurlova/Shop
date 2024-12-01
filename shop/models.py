@@ -30,6 +30,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category,
                                  related_name='products',
                                  on_delete=models.CASCADE)
+    author = models.CharField(max_length=75, verbose_name='Автор')
     name = models.CharField(max_length=200,
                             verbose_name='Название')
     description = models.TextField(blank=True)
