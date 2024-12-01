@@ -12,6 +12,9 @@ app_name = 'shop'
 urlpatterns = [
     # path('categories/<slug:slug>/products/test/', product_list_view, name='test'),
 
+    path('about/', about, name='about'),
+    path('contacts/', contacts, name='contacts'),
+
     path('categories/add/', CategoryCreateView.as_view(), name='category_add'),
     path('categories/<slug:slug>/edit/', CategoryUpdateView.as_view(), name='category_edit'),
     path('categories/<slug:slug>/delete/', CategoryDeleteView.as_view(), name='category_delete'),
@@ -29,8 +32,7 @@ urlpatterns = [
     path('<slug:slug>/delete/', ProductDeleteView.as_view(), name='product_delete'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
 
-    path('about/', about, name='about'),
-    path('contacts/', contacts, name='contacts'),
+
     path('', ProductListByCategory.as_view(), name='index'),
 
 

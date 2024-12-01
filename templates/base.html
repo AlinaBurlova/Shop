@@ -22,8 +22,8 @@
           <div class="left">
         <a href="{% url 'shop:categories' %}">Категории</a>
         <a href="{% url 'shop:products' %}">Товары</a>
-        <a href="#">О нас</a>
-        <a href="#">Контакты</a>
+        <a href="{% url 'shop:about' %}">О нас</a>
+        <a href="{% url 'shop:contacts' %}">Контакты</a>
         {% if cart|length != 0 %}
         <a href="{% url 'cart:cart_detail' %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
         {% else %}
@@ -75,7 +75,7 @@
     </form>
 		<div class="my_block">
     {% block content %}
-		
+
     {% endblock content%}
 	</div>
 

@@ -121,7 +121,7 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = self.object
-        products = category.products.all()[:2]  # Измените на правильное имя, если у вас есть related_name
+        products = category.products.all()[:3]
         context['products'] = products
 
         return context
