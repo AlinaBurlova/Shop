@@ -70,7 +70,7 @@
 
     </header>
     <form class="search" action="{% url 'shop:product_search' %}" method="get">
-        <input type="search" name="query">
+        <input type="search" name="query" value="{{ query|default:'' }}">
         <button type="submit" class="btn btn-secondary" style="padding: 3px 5px; margin: 0;">Поиск</button>
     </form>
 		<div class="my_block">

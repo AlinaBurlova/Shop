@@ -18,6 +18,7 @@
             <form method="get">
                 {{ filterset.form.as_p }}
                 <button type="submit" class="btn btn-primary">Фильтровать</button>
+                <a href="{% url 'shop:products'%}" class="btn btn-secondary">Сбросить</a>
             </form>
         </div>
         </div>
@@ -30,7 +31,7 @@
                 </div>
             <div class="products">
     <div class="cards">
-{% for product in products %}
+{% for product in page_obj %}
 <div class="card">
   <div class="card__top">
     {% if product.image %}
@@ -69,6 +70,8 @@
   </div>
 </div>
 
+{% empty  %}
+<p>Нет продуктов, соответствующих вашему запросу.</p>
 {% endfor %}
 </div>
             </div>
@@ -79,14 +82,14 @@
          <span class="step-links" style="display: flex;">
         {% if is_paginated %}
             {% if page_obj.has_previous %}
-             <li class="page-item"><a class="page-link" href="?page=1&q={{ query }}">Первая</a></li>
-             <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}">Предыдущая</a></li>
-    {% endif %}
+             <li class="page-item"><a class="page-link" href="?page=1&q={{ query|urlencode }}">Первая</a></li>
+             <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&query={{ query|urlencode }}">Предыдущая</a></li>
+        {% endif %}
              {% endif %}
- {% if page_obj.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}">Следующая</a></li>
-      <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}">Последняя</a></li>
-    {% endif %}
+        {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&query={{ query }}">Следующая</a></li>
+                <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&query={{ query }}">Последняя</a></li>
+         {% endif %}
     </span>
 
   </ul>

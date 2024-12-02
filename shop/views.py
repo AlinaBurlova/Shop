@@ -47,6 +47,10 @@ class ProductListByCategory(ListView):
             category = get_object_or_404(Category, slug=self.kwargs['slug'])
             queryset = Product.objects.filter(category=category)
 
+        query = self.request.GET.get('query')
+        if query:
+            queryset = queryset.filter(Q(name__icontains=query))
+
         self.filterset = ProductFilter(self.request.GET, queryset)
         return self.filterset.qs
 
@@ -174,12 +178,28 @@ class CategoryDeleteView(DeleteView):
 
 def product_search(request):
     query = request.GET.get('query')
-    query_text = Q(name__contains=query)
+    queryset = Product.objects.all()
 
-    results = Product.objects.filter(query_text)
+    if query:
+        queryset = queryset.filter(Q(name__icontains=query))
+
+    filterset = ProductFilter(request.GET, queryset)
+
+    results = filterset.qs
     categories = Category.objects.all()
 
-    context = {'categories': categories, 'products': results}
+    paginator = Paginator(results, 3)
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'categories': categories,
+        'page_obj': page_obj,
+        'filterset': filterset,
+        'is_paginated': paginator.num_pages > 1,
+        'query': query,
+    }
 
     return render(request, template_name="shop/products_by_category.html", context=context)
 

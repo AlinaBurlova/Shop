@@ -171,7 +171,7 @@ footer p {
 
 
 .card__category::before {
-  content: "💡";
+  content: "📖";
   margin-right: 4px;
   position: relative;
 }
@@ -347,6 +347,10 @@ footer p {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.search input {
+    padding: 0 5px
 }
 
 .up {
