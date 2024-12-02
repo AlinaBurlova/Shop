@@ -25,11 +25,12 @@ def register(request):
     user_form = UserRegistrationForm()
     context = {
         'register_form': user_form,
+        'current_page': 'users:register',
     }
     return render(request, template_name='users/register.html', context=context)
 
-def log_in(request):
 
+def log_in(request):
     form = AuthenticationForm(request, request.POST)
     if form.is_valid():
         username = form.cleaned_data['username']
@@ -39,8 +40,9 @@ def log_in(request):
             login(request, user)
             url = request.GET.get('next', LOGIN_REDIRECT_URL)
             return redirect(url)
-    context = {'form': form}
+    context = {'form': form, 'current_page': 'users:login'}
     return render(request, template_name='users/login.html', context=context)
+
 
 @login_required
 def log_out(request):

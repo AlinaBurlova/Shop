@@ -45,6 +45,18 @@ body {
   gap: 10px;
 }
 
+.active {
+   background-color: #fff !important;
+   color: #333 !important;
+   // text-decoration: underline !important;
+}
+
+.active:hover {
+   background-color: #fff !important;
+   color: #333 !important;
+   opacity: 0.7 !important;
+}
+
 .container {
     display: flex;
     margin: 20px;
@@ -342,6 +354,8 @@ footer p {
     justify-content: space-between;
     align-items: center;
 }
+
+
 
 @media screen and (max-width: 800px) {
    .header .left {

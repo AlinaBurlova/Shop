@@ -91,11 +91,13 @@ def orders_list(request):
     admin = user.objects.get(username='staff')
     if request.user == admin:
         orders = Order.objects.all()
-        context = {"orders": orders}
+        context = {"orders": orders, "current_page": 'orders',}
         return render(request, template_name='orders/orders.html', context=context)
 
     orders = Order.objects.filter(user=request.user)
-    context = {"orders": orders}
+    context = {
+        "orders": orders,
+    }
 
     return render(request, template_name='orders/orders.html', context=context)
 

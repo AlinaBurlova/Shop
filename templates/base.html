@@ -20,16 +20,16 @@
     <header>
          <nav class="header">
           <div class="left">
-        <a href="{% url 'shop:categories' %}">Категории</a>
-        <a href="{% url 'shop:products' %}">Товары</a>
-        <a href="{% url 'shop:about' %}">О нас</a>
-        <a href="{% url 'shop:contacts' %}">Контакты</a>
+        <a href="{% url 'shop:categories' %}" class="{% if current_page == 'shop:categories' %}active{% endif %}" > Категории</a>
+        <a href="{% url 'shop:products' %}" class="{% if current_page == 'shop:products' %}active{% endif %}">Товары</a>
+        <a href="{% url 'shop:about' %}" class="{% if current_page == 'shop:about' %}active{% endif %}">О нас</a>
+        <a href="{% url 'shop:contacts' %}" class="{% if current_page == 'shop:contacts' %}active{% endif %}">Контакты</a>
         {% if cart|length != 0 %}
-        <a href="{% url 'cart:cart_detail' %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
+        <a href="{% url 'cart:cart_detail' %}" class="{% if current_page == 'cart:cart_detail' %}active{% endif %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
         {% else %}
-        <a href="{% url 'cart:cart_detail' %}">Корзина<span id="cartLengthHeader"></span></a>
+        <a href="{% url 'cart:cart_detail' %}" class="{% if current_page == 'cart:cart_detail' %}active{% endif %}">Корзина<span id="cartLengthHeader"></span></a>
         {% endif %}
-        <a href="{% url 'orders' %}">Заказы</a>
+        <a href="{% url 'orders' %}" class="{% if current_page == 'orders' %}active{% endif %}">Заказы</a>
           </div>
 
 
@@ -38,16 +38,16 @@
             <img src="{% static 'img/menu.png' %}" width="20px">
           </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
-              <a class="dropdown-item"  href="{% url 'shop:categories' %}">Категории</a>
-            <a class="dropdown-item"  href="{% url 'shop:products' %}">Товары</a>
-            <a class="dropdown-item"  href="{% url 'shop:about' %}">О нас</a>
-            <a class="dropdown-item"  href="{% url 'shop:contacts' %}">Контакты</a>
+              <a href="{% url 'shop:categories' %}" class="dropdown-item {% if current_page == 'shop:categories' %}active{% endif %}">Категории</a>
+            <a  href="{% url 'shop:products' %}" class="dropdown-item {% if current_page == 'shop:products' %}active{% endif %}" >Товары</a>
+            <a  href="{% url 'shop:about' %}" class="dropdown-item {% if current_page == 'shop:about' %}active{% endif %}">О нас</a>
+            <a  href="{% url 'shop:contacts' %}" class="dropdown-item {% if current_page == 'shop:contacts' %}active{% endif %}">Контакты</a>
             {% if cart|length != 0 %}
-            <a class="dropdown-item"  href="{% url 'cart:cart_detail' %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
+            <a  href="{% url 'cart:cart_detail' %}" class="dropdown-item {% if current_page == 'cart:cart_detail' %}active{% endif %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
              {% else %}
-            <a class="dropdown-item"  href="{% url 'cart:cart_detail' %}">Корзина<span id="cartLengthHeader"></span></a>
+            <a  href="{% url 'cart:cart_detail' %}" class="dropdown-item {% if current_page == 'cart:cart_detail' %}active{% endif %}">Корзина<span id="cartLengthHeader"></span></a>
               {% endif %}
-            <a class="dropdown-item"  href="{% url 'orders' %}">Заказы</a>
+            <a href="{% url 'orders' %}" class="dropdown-item {% if current_page == 'orders' %}active{% endif %}">Заказы</a>
               </div>
 
 
@@ -57,12 +57,12 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
               {% if not user.is_authenticated %}
-            <li><a class="dropdown-item" href="{% url 'users:register' %}">Регистрация</a></li>
-            <li><a class="dropdown-item" href="{% url 'users:login' %}">Войти</a></li>
+            <li><a href="{% url 'users:register' %}" class="dropdown-item {% if current_page == 'users:register' %}active{% endif %}">Регистрация</a></li>
+            <li><a href="{% url 'users:login' %}" class="dropdown-item {% if current_page == 'users:login' %}active{% endif %}">Войти</a></li>
               {% endif %}
               {% if user.is_authenticated %}
-            <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
-            <li><a class="dropdown-item" href="#">{{ user.username }}</a></li>
+            <li><a href="{% url 'users:logout' %}" class="dropdown-item">Выйти</a></li>
+            <li><a href="#" class="dropdown-item">{{ user.username }}</a></li>
               {% endif %}
           </ul>
               </div>

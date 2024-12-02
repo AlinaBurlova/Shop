@@ -35,6 +35,7 @@ class ProductListByCategory(ListView):
         categories = Category.objects.all()
         context['categories'] = categories
         context['filterset'] = self.filterset
+        context['current_page'] = 'shop:products'
 
         return context
 
@@ -70,8 +71,6 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
-
-
 class ProductUpdateView(UpdateView):
     model = Product
     template_name = 'shop/admin/product_edit.html'
@@ -86,6 +85,7 @@ class ProductDeleteView(DeleteView):
     template_name = 'shop/admin/product_delete.html'
     success_url = reverse_lazy('shop:products')
     slug_url_kwarg = 'slug'
+
 
 class CategoryCreateView(CreateView):
     model = Category
@@ -103,6 +103,12 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'shop/admin/categories.html'
     context_object_name = 'categories'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_page'] = 'shop:categories'
+
+        return context
 
 
 class CategoryDetailView(DetailView):
@@ -132,8 +138,10 @@ def about(request):
         'name': 'Дмитрий',
         'lastname': 'Горин',
         'email': 'd.gorin@yandex.ru',
-        'title': "О сайте"
+        'title': "О сайте",
+        'current_page': 'shop:about',
     }
+
     return render(request, template_name='shop/about.html', context=context)
 
 
@@ -144,6 +152,7 @@ def contacts(request):
         "name": "Алина",
         "email": "alina-burlova@mail.ru",
         "address": "м. Международная",
+        'current_page': 'shop:contacts',
     }
     return render(request, template_name="shop/contacts.html", context=context)
 

@@ -173,7 +173,11 @@ def cart_add(request, slug):
 
 
 def cart_detail(request):
-    return render(request, template_name='cart/cart_detail.html')
+    context = {
+        'current_page': 'cart:cart_detail',
+    }
+
+    return render(request, template_name='cart/cart_detail.html', context=context)
 
 
 @csrf_exempt
