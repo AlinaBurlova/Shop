@@ -108,6 +108,14 @@ class CategoryListView(ListView):
     template_name = 'shop/admin/categories.html'
     context_object_name = 'categories'
 
+    def get_template_names(self):
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+        if self.request.user == admin:
+            return ['shop/admin/categories.html']
+        else:
+            return ['shop/categories.html']
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['current_page'] = 'shop:categories'
@@ -131,7 +139,7 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = self.object
-        products = category.products.all()[:3]
+        products = category.products.all()[:2]
         context['products'] = products
 
         return context

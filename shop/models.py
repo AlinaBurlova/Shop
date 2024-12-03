@@ -6,6 +6,11 @@ from slugify import slugify
 class Category(models.Model):
     name = models.CharField(max_length=200, verbose_name="Категория")
     slug = models.SlugField(max_length=200, unique=True)
+    description = models.TextField(blank=True)
+    image_1 = models.ImageField(upload_to='categories/image_1',
+                              blank=True)
+    image_2 = models.ImageField(upload_to='categories/image_2',
+                                blank=True)
 
     class Meta:
         ordering = ['name']
