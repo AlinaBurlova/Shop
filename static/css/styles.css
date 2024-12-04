@@ -767,7 +767,6 @@ input:focus {
 	overflow-y: auto;
 	margin-top: 0px;
 	margin-bottom: 20px;
-	border-bottom: 1px solid #eee;
 
 }
 
@@ -776,6 +775,7 @@ input:focus {
 	table-layout: fixed;
 	border: none;
 	min-width: 420px;
+
 }
 
 .cart-detail thead th {
@@ -796,9 +796,12 @@ input:focus {
 	padding: 10px 15px;
 	font-size: 13px;
 	vertical-align: center;
+	border-bottom: 1px solid #eee;
 }
-.cart-detail tbody tr:nth-child(even){
+.cross-del{
 	background: #f3f3f3;
+	border-bottom: 0 solid #fff !important;
+
 }
 
 /* Стили для скролла */
@@ -821,9 +824,10 @@ input:focus {
 }
 
 .cross-del {
-    border-left: 0px solid #ddd !important;
+    border-left: 0 solid #ddd !important;
     border-right: 0 solid #ddd !important;
     padding-left: 20px !important;
+    background-color: white !important;
 }
 
 

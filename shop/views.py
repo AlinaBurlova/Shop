@@ -177,6 +177,8 @@ class CategoryDeleteView(DeleteView):
 
 
 def product_search(request):
+
+
     query = request.GET.get('query')
     queryset = Product.objects.all()
 
@@ -199,6 +201,7 @@ def product_search(request):
         'filterset': filterset,
         'is_paginated': paginator.num_pages > 1,
         'query': query,
+        'current_page': 'shop:products',
     }
 
     return render(request, template_name="shop/products_by_category.html", context=context)

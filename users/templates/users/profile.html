@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+<h2>Ваш профиль</h2>
+<p>Логин - {{ user.username }}</p>
+<p>ФИ - {{ user.last_name }} {{ user.first_name }}</p>
+<p>Почта - {{ user.email }}</p>
+<p>Телефон - {{ user.phone }}</p>
+<p>Город - {{ user.city }}</p>
+<hr>
+<p>Дата регистрации - {{ user.date_joined|date:'d:m:Y H:i'}}</p>
+<hr>
+<a href="{% url 'users:change_password' %}">Изменить пароль</a>
+
+{% endblock content %}

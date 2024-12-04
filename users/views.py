@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 from website_shop.settings import LOGIN_REDIRECT_URL
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, ChangePasswordForm
 
 User = get_user_model()
 
@@ -49,3 +49,38 @@ def log_out(request):
     logout(request)
     return redirect('shop:products')
 
+# @login_required
+# def user_detail(request, pk):
+#     user = get_object_or_404(User, pk=pk)
+#     if request.user != user:
+#         raise PermissionDenied()
+#     context = {
+#         'user': user,
+#         'title': 'Информация о профиле',
+#     }
+#     return render(request, template_name='users/profile.html', context=context)
+#
+#
+# @login_required
+# def change_password(request):
+#     if request.method == 'POST':
+#         form = ChangePasswordForm(request.POST)
+#         if form.is_valid():
+#             old_password = form.cleaned_data['old_password']
+#             new_password = form.cleaned_data['new_password']
+#
+#             # Проверка правильности старого пароля
+#             if not request.user.check_password(old_password):
+#                 form.add_error('old_password', 'Старый пароль неверен.')
+#             else:
+#                 # Изменение пароля
+#                 request.user.set_password(new_password)
+#                 request.user.save()
+#                 update_session_auth_hash(request, request.user)  # Сохраняем сессию пользователя
+#                 messages.success(request, 'Пароль успешно изменен.')
+#                 return redirect('some_view')  # Замените на нужный вам URL
+#
+#     else:
+#         form = ChangePasswordForm()
+#
+#     return render(request, 'users/change_password.html', {'form': form})
