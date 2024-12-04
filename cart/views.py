@@ -128,9 +128,9 @@ class ProductCartUser:
                 CartItem.objects.create(cart=self.user_cart, product=product, quantity=self.cart[prod_id]['quantity'])
 
     def clear(self):
-        self.cart.clear()
-        self.save()
-
+        self.user_cart.items.all().delete()  # Удаляем все позиции из корзины
+        self.cart.clear()  # Очищаем локальную корзину
+        self.user_cart.save()  # Сохраняем изменения в корзине пользователя
 
     def remove(self, product_id, request):
         product = Product.objects.get(pk=product_id)
@@ -214,8 +214,13 @@ def remove_product(request, product_id):
 
 
 def remove_cart(request):
-    cart = Cart(request)
+    if request.user.id:
+        cart = ProductCartUser(request)
+    else:
+        cart = Cart(request)
+
     cart.clear()
+
     return redirect("cart:cart_detail")
 
 

@@ -147,26 +147,18 @@ class CategoryDetailView(DetailView):
 
 def about(request):
     context = {
-        'name': 'Дмитрий',
-        'lastname': 'Горин',
-        'email': 'd.gorin@yandex.ru',
-        'title': "О сайте",
+        'name': 'Книжный',
+        'type': '---ИНТЕРНЕТ-МАГАЗИН---',
+        'city': 'Санкт-Петербург',
+        'year': '2024',
+        'pr_name': 'Алина',
+        'pr_lastname': 'Бурлова',
+        'pr_email': 'alina-burlova@bk.ru',
         'current_page': 'shop:about',
     }
 
     return render(request, template_name='shop/about.html', context=context)
 
-
-def contacts(request):
-    context = {
-        "title": "Контакты",
-        "lastname": "Бурлова",
-        "name": "Алина",
-        "email": "alina-burlova@mail.ru",
-        "address": "м. Международная",
-        'current_page': 'shop:contacts',
-    }
-    return render(request, template_name="shop/contacts.html", context=context)
 
 class CategoryUpdateView(UpdateView):
     model = Category

@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-<title>Мои заказы:</title>
-{% endblock title %}
-
 {% block content %}
+{% if orders|length != 0%}
+<h2>Мои заказы:</h2>
 <table style="width:80%; text-align:justify; margin:0 auto;">
     <thead>
     <tr>
@@ -34,5 +32,12 @@
     {% endfor %}
     </tbody>
 </table>
+{% else %}
+
+<p class="cart-empty">
+    Заказов нет😭
+</p>
+
+{% endif %}
 
 {% endblock content %}

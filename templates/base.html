@@ -23,7 +23,6 @@
         <a href="{% url 'shop:categories' %}" class="{% if current_page == 'shop:categories' %}active{% endif %}" > Категории</a>
         <a href="{% url 'shop:products' %}" class="{% if current_page == 'shop:products' %}active{% endif %}">Товары</a>
         <a href="{% url 'shop:about' %}" class="{% if current_page == 'shop:about' %}active{% endif %}">О нас</a>
-        <a href="{% url 'shop:contacts' %}" class="{% if current_page == 'shop:contacts' %}active{% endif %}">Контакты</a>
         {% if cart|length != 0 %}
         <a href="{% url 'cart:cart_detail' %}" class="{% if current_page == 'cart:cart_detail' %}active{% endif %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
         {% else %}
@@ -41,7 +40,6 @@
               <a href="{% url 'shop:categories' %}" class="dropdown-item {% if current_page == 'shop:categories' %}active{% endif %}">Категории</a>
             <a  href="{% url 'shop:products' %}" class="dropdown-item {% if current_page == 'shop:products' %}active{% endif %}" >Товары</a>
             <a  href="{% url 'shop:about' %}" class="dropdown-item {% if current_page == 'shop:about' %}active{% endif %}">О нас</a>
-            <a  href="{% url 'shop:contacts' %}" class="dropdown-item {% if current_page == 'shop:contacts' %}active{% endif %}">Контакты</a>
             {% if cart|length != 0 %}
             <a  href="{% url 'cart:cart_detail' %}" class="dropdown-item {% if current_page == 'cart:cart_detail' %}active{% endif %}">Корзина (<span id="cartLengthHeader">{{ cart|length }}</span>)</a>
              {% else %}

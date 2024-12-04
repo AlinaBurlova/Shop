@@ -3,7 +3,7 @@ from .views import (ProductListView, ProductCreateView, ProductDetailView,
                     ProductUpdateView, ProductDeleteView,
                     CategoryCreateView, CategoryListView, CategoryDetailView,
                     CategoryUpdateView, CategoryDeleteView)
-from .views import ProductListByCategory, product_search, about, contacts
+from .views import ProductListByCategory, product_search, about
 # from .views import product_list_view
 from cart.views import cart_add
 
@@ -13,7 +13,6 @@ urlpatterns = [
     # path('categories/<slug:slug>/products/test/', product_list_view, name='test'),
 
     path('about/', about, name='about'),
-    path('contacts/', contacts, name='contacts'),
 
     path('categories/add/', CategoryCreateView.as_view(), name='category_add'),
     path('categories/<slug:slug>/edit/', CategoryUpdateView.as_view(), name='category_edit'),

@@ -4,10 +4,17 @@
 {% endblock title %}
 
 {% block content %}
-<form method="post">
+<h2 class="user-p">Регистрация</h2>
+<form method="post" class="user-form">
     {% csrf_token %}
-    {{register_form.as_p}}
-    <button type="submit">Зарегистрироваться</button>
+    <div class="fields">
+			{% for field in register_form %}
+			<div class="text-field">
+				<span class="text-field__label">{{field.label_tag}}</span>
+				{{field}}
+			</div>
+			{% endfor %}
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 </form>
 
 {% endblock content %}
