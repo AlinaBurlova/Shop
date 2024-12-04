@@ -8,6 +8,7 @@ User = get_user_model()
 class UserRegistrationForm(forms.ModelForm):
 
     password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
 
     def clean_password2(self):
         cleaned_data = self.cleaned_data
