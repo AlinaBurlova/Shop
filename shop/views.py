@@ -18,6 +18,16 @@ from django.contrib.auth import get_user_model
 class AdminTemplateView(TemplateView):
     template_name = 'shop/admin/admin.html'
 
+    def get_template_names(self):
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+        if self.request.user == admin:
+            return ['shop/admin/admin.html']
+        else:
+            raise PermissionError
+
+
+
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['total'] = 5
