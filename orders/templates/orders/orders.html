@@ -3,8 +3,9 @@
 
 {% block content %}
 {% if orders|length != 0%}
-<h2>Мои заказы:</h2>
-<table style="width:80%; text-align:justify; margin:0 auto;">
+<h2 class="order-h2">Мои заказы:</h2>
+<div class="cart-detail">
+<table>
     <thead>
     <tr>
         <th class="order-header">Номер заказа</th>
@@ -32,6 +33,7 @@
     {% endfor %}
     </tbody>
 </table>
+</div>
 {% else %}
 
 <p class="cart-empty">

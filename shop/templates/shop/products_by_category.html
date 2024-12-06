@@ -17,8 +17,10 @@
         <div class="filters">
             <form method="get">
                 {{ filterset.form.as_p }}
+                <div class="filter-btns">
                 <button type="submit" class="btn btn-primary">Фильтровать</button>
                 <a href="{% url 'shop:products'%}" class="btn btn-secondary">Сбросить</a>
+              </div>
             </form>
         </div>
         </div>

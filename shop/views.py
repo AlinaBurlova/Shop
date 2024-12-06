@@ -11,7 +11,7 @@ from .models import Product, Category
 from .forms import CategoryCreateForm, ProductCreateForm
 from .filters import ProductFilter
 from django.contrib.auth import get_user_model
-
+from random import choice 
 
 
 
@@ -26,8 +26,6 @@ class AdminTemplateView(TemplateView):
         else:
             raise PermissionError
 
-
-
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['total'] = 5
@@ -36,9 +34,7 @@ class AdminTemplateView(TemplateView):
 
 class ProductListByCategory(ListView):
     model = Product
-    template_name = 'shop/products_by_category.html'
     context_object_name = 'products'
-    paginate_by = 3  # Количество продуктов на странице
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,6 +60,23 @@ class ProductListByCategory(ListView):
         self.filterset = ProductFilter(self.request.GET, queryset)
         return self.filterset.qs
 
+    def get_template_names(self):
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+
+        if self.request.user == admin:
+            return ['shop/admin/products.html']
+        else:
+            return ['shop/products_by_category.html']
+
+    def get_paginate_by(self, queryset):
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+
+        if self.request.user != admin:
+            return 3
+        return None
+
 
 class ProductCreateView(CreateView):
     model = Product
@@ -77,6 +90,31 @@ class ProductDetailView(DetailView):
     template_name = ('shop/admin/product_detail.html')
     context_object_name = 'product'
     slug_url_kwarg = 'slug'
+
+    def get_template_names(self):
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+        if self.request.user == admin:
+            return ['shop/admin/product_detail.html']
+        else:
+            return ['shop/product_detail.html']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.object.category
+        print(category.products.all())
+        products = []
+        for pr in category.products.all():
+            if pr != self.object:
+                products.append(pr)
+        
+        
+        # products = choice(products)
+        products = products[:2]
+        # products = category.products.all()[:2]
+        context['products'] = products
+
+        return context
 
 
 class ProductListView(ListView):
@@ -115,7 +153,6 @@ class CategoryCreateView(CreateView):
 
 class CategoryListView(ListView):
     model = Category
-    template_name = 'shop/admin/categories.html'
     context_object_name = 'categories'
 
     def get_template_names(self):

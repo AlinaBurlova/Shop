@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+<title>{{product.name}}</title>
+{% endblock title %}
+
+{% block content %}
+<div>Наименование - {{product.name}}</div>
+<div>Описание - {{product.description}}</div>
+<div>Стоимость - {{product.price}}</div>
+
+<p>Краткая информация о товаре</p>
+<div>6 случайных товаров из этой категории</div>
+<h2>Книги из этой категории:</h2>
+<div class="cards">
+    {% for product in products %}
+    <div class="card">
+  <div class="card__top">
+    {% if product.image %}
+    <img
+      src="{{ product.image.url }}"
+      class="card-img-top"
+      alt="{{ product.name }}"
+      style="width: 100%; height: 180px; object-fit: cover"
+    />
+    {% else %}
+    <img
+      src="{% static 'img/no_image.png' %}"
+      class="card-img-top"
+      alt="{{ product.name }}"
+      style="width: 100%; height: 180px; object-fit: cover"
+    />
+    {% endif %}
+  </div>
+  <div class="card__bottom">
+    <div class="card__prices">
+        <div class="card__price">{{product.price}}</div>
+        <div class="card__category">{{product.category}}</div>
+    </div>
+    <a href="{{ product.get_absolute_url }}" class="card__title">
+      {{product.name}}
+    </a>
+      <div class="card__btns">
+    <a href="{{ product.get_absolute_url }}" class="card__btns__btn">Подробнее</a>
+    {% if product.id|string_value in cart.cart %}
+          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">Добавлено {{cart|count_items:product.id|string_value}}</a>
+    {% else %}
+          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">В корзину</a>
+    {% endif %}
+          </div>
+  </div>
+</div>
+    {% empty %}
+        На даннный момент нет товаров в этой категории.
+    {% endfor %}
+</div>
+</div>
+</div>
+
+{% endblock content %}

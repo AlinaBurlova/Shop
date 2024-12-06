@@ -108,7 +108,7 @@ def order_detail(request, number):
         order = get_object_or_404(Order, number=number)
         order_items = order.order_items.all()
         context = {"order": order, "order_items": order_items}
-        return render(request, template_name='orders/order_detail.html', context=context)
+        return render(request, template_name='orders/admin/order_detail.html', context=context)
 
     order = get_object_or_404(Order, number=number, user=request.user)
     order_items = order.order_items.all()

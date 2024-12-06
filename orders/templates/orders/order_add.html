@@ -6,7 +6,8 @@
 {% endblock title %}
 
 {% block content %}
-<div style="text-align: center; margin-bottom: 50px; font-size: 30px;">Ваш заказ: </div>
+<h2 class="order-h2">Ваш заказ: </h2>
+<div class="cart-detail">
 <table class="cart-title" style="width:80%; text-align:justify; margin:0 auto;">
     <thead>
     <tr>
@@ -22,19 +23,19 @@
     {% for item in cart %}
     {% with product=item.product %}
     <tr>
-        <td>
+        <td style="text-align: center;">
             {{ forloop.counter }}
         </td>
         <td>
             {{ product.name }}
         </td>
-        <td>
+        <td style="text-align: center;">
             <span id="productPrice">{{ product.price|floatformat:0 }}</span> руб.
         </td>
-        <td>
+        <td style="text-align: center;">
             {{ item.quantity }}
         </td>
-        <td>
+        <td style="text-align: center;">
             <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span>  руб.
         </td>
     </tr>
@@ -42,15 +43,15 @@
     {% endfor %}
     </tbody>
 </table>
-
-<div style="width: 80%; text-align: justify; margin: 0 auto; display: flex; justify-content: space-between; ">
-    <div style="padding-top: 50px; flex-direction: column;">
+</div>
+<div class="order-price">
+    <div>
         <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
         <div>Заказ на сумму: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
     </div>
 </div>
 
-<form action="{% url 'new_order' %}" method="post" style="width: 80%; padding-top: 50px; margin: 0 auto;">
+<form action="{% url 'new_order' %}" method="post" class="order-choice">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Оформить</button>

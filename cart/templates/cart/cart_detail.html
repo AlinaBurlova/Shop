@@ -3,7 +3,7 @@
 
 {% block content %}
 {% if cart|length != 0%}
-<h2>Корзина</h2>
+<h2 class="cart-h2">Корзина</h2>
 <div class="cart-detail">
 <table>
     <thead>
@@ -70,14 +70,14 @@
     <div style="flex-direction: column;">
     <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
     <div>Сумма товаров в корзине: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
-     <a href="{% url 'cart:remove_cart' %}" class="btn btn-secondary">Очистить корзину</a>
+     <a href="{% url 'cart:remove_cart' %}" class="btn btn-secondary cart-btn">Очистить корзину</a>
      </div>
 
     <div style="padding-top: 10px">
     {% if not request.user.id %}
-        <a href="#" class="btn btn-primary" id="newOrder">Оформить заказ</a>
+        <a href="#" class="btn btn-primary cart-btn" id="newOrder">Оформить заказ</a>
     {% else %}
-        <a href="{% url 'new_order' %}" class="btn btn-primary" id="newOrderUser">Оформить</a>
+        <a href="{% url 'new_order' %}" class="btn btn-primary cart-btn" id="newOrderUser">Оформить</a>
     {% endif %}
         </div>
 
@@ -97,10 +97,10 @@
     <div class="modal-content-my__order-form">
         <span class="close" id="closeOrderForm">&times;</span>
         <h4>Заполните информацию о заказе</h4>
-        <form action="#" method="post">
+        <form action="#" method="post" class="order-choice modal-choice">
             {{ quick_order_form.as_p }}
             {% csrf_token %}
-        <input type="button" id="createQuickOrderBtn" value="Оформить">
+        <input type="button" id="createQuickOrderBtn" value="Оформить" class="btn btn-secondary">
         </form>
     </div>
 </div>
