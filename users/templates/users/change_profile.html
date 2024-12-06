@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Изменение профиля</title>
+{% endblock title %}
+
+{% block content %}
+    <h2>{{ title }}</h2>  <!-- Заголовок страницы -->
+
+<div class="container">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>  <!-- Кнопка для отправки формы -->
+    </form>
+
+</div>
+
+{% endblock content %}

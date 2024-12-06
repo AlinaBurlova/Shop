@@ -11,5 +11,5 @@
 <p>Дата регистрации - {{ user.date_joined|date:'d:m:Y H:i'}}</p>
 <hr>
 <a href="{% url 'users:change_password' %}">Изменить пароль</a>
-
+<a href="{% url 'users:change_profile' %}">Изменить профиль</a>
 {% endblock content %}

@@ -20,8 +20,15 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = ('username', 'password',
                   'first_name', 'last_name', 'email',
-                  'phone', 'city')
+                  'phone', 'city', 'image')
 
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username',
+                  'first_name', 'last_name', 'email',
+                  'phone', 'city', 'image']
 
 
 class ChangePasswordForm(forms.Form):

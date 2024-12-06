@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.contrib import messages
 
 from website_shop.settings import LOGIN_REDIRECT_URL
-from .forms import UserRegistrationForm, ChangePasswordForm
+from .forms import UserRegistrationForm, ChangePasswordForm, UserProfileForm
 
 User = get_user_model()
 
@@ -84,3 +85,27 @@ def change_password(request):
         form = ChangePasswordForm()
 
     return render(request, 'users/change_password.html', {'form': form})
+
+
+@login_required
+def change_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            form.save()
+            context = {
+                'user': user,
+                'title': 'Успешное изменение профиля',
+            }
+            return render(request, template_name='users/change_done.html', context=context)
+    else:
+        form = UserProfileForm(instance=user)
+
+    context = {
+        'form': form,
+        'title': 'Изменение профиля',
+    }
+
+    return render(request, 'users/change_profile.html', context=context)
