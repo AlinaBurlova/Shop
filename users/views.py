@@ -71,6 +71,11 @@ def user_detail(request, pk):
         'order_count': order_count,
         'current_page': 'users:detail',
     }
+
+    admin = get_user_model().objects.get(username='staff')
+    if request.user == admin:
+        return render(request, template_name='users/admin/admin.html', context=context)
+
     return render(request, template_name='users/profile.html', context=context)
 
 

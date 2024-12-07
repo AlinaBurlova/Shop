@@ -327,14 +327,14 @@ footer p {
   margin-left: auto;
 }
 
-.filters input[type="checkbox"] {
+input[type="checkbox"] {
   height: 20px;
   width: 10%;
   margin-left: auto;
   padding: 6px 9px;
 }
 
-.filters input[type=checkbox]:checked {
+input[type=checkbox]:checked {
   background-color: #6c757d;
 }
 
@@ -702,7 +702,9 @@ footer p {
 }
 
 .text-field__label,
-.user-form input {
+.user-form input,
+.user-form select,
+.user-form textarea {
   display: block;
   margin-bottom: 0.25rem;
   width: 50%;
@@ -713,7 +715,8 @@ footer p {
   font-size: 12px;
 }
 
-input {
+input,
+textarea {
   display: block;
   width: 50%;
   height: fit-content;
@@ -733,7 +736,8 @@ input {
   appearance: none;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   color: #212529;
   background-color: #fff;
   border-color: #bdbdbd;
@@ -1031,6 +1035,34 @@ input[type="button"] {
     max-width: 55% !important;
 }
 
+.admin-page {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.actions {
+    background-color: white;
+    width: 500px;
+    height: fit-content !important;
+    display: flex;
+    justify-content: center;
+}
+
+.actions a {
+    color: black;
+}
+
+.user-form input[type="checkbox"] {
+  height: 20px;
+  width: 7px !important;
+}
+
+.admin-slk {
+    color: white !important;
+}
+
 /* Стили для скролла */
 
 /*::-webkit-scrollbar {
@@ -1108,6 +1140,9 @@ input[type="button"] {
     font-size: 14px;
   }
 
+  .admin-page {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 970px) {
@@ -1194,7 +1229,8 @@ input[type="button"] {
 
   .modal-content-my a,
   .user-form button,
-  .password-form button {
+  .password-form button,
+  .btn-light{
     font-size: 0.7rem !important;
   }
 
@@ -1359,6 +1395,10 @@ input[type="button"] {
   .container {
      max-width: fit-content !important;
   }
+
+  .admin-header .drop-1{
+    width: 13rem !important;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -1394,6 +1434,14 @@ input[type="button"] {
 
   .row>* {
     padding-right: 0 !important;
+  }
+
+  .admin-page .card{
+    width: fit-content;
+  }
+
+  .admin-header .drop-1 {
+    width: 12.9rem !important;
   }
 }
 
@@ -1453,6 +1501,7 @@ input[type="button"] {
 
   .modal-content-my a,
   .user-form button,
+  .btn-light,
   .password-form button {
     font-size: 0.5rem !important;
   }
@@ -1463,6 +1512,10 @@ input[type="button"] {
 
   .container {
      min-width: fit-content !important;
+  }
+
+  .admin-header .drop-1{
+    width: 11rem !important;
   }
 }
 
@@ -1501,7 +1554,7 @@ input[type="button"] {
     padding: 6px;
   }
 
-  footer p {
+  footer p, .order-admin-item{
     font-size: 12px;
   }
 
@@ -1546,6 +1599,8 @@ input[type="button"] {
 
   .text-field__label,
   .user-form input,
+  .user-form select,
+  .user-form textarea,
   .password-form input {
     font-size: 10px;
   }
@@ -1556,6 +1611,8 @@ input[type="button"] {
   }
 
   .user-form input,
+  .user-form select,
+  .user-form textarea,
   .password-form input {
     padding: 0.2rem 0.75rem;
   }
@@ -1728,14 +1785,15 @@ input[type="button"] {
     font-size: 0.9rem;
   }
 
-  footer p {
+  footer p, .order-admin-item {
     font-size: 9px;
   }
 
   .text-field__label,
   .user-form input,
   .password-form input,
-  .password-form input {
+  .password-form input,
+  .user-form textarea {
     font-size: 7px;
   }
 
@@ -1758,7 +1816,8 @@ input[type="button"] {
 
   .modal-content-my a,
   .user-form button,
-  .password-form button {
+  .password-form button,
+  .btn-light {
     font-size: 0.4rem !important;
   }
 
@@ -1800,5 +1859,9 @@ input[type="button"] {
 
   .user-card .join {
     font-size: 8px;
+  }
+
+  .admin-header .drop-1{
+    width: 9.7rem !important;
   }
 }

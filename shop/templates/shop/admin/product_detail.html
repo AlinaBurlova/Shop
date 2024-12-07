@@ -1,16 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base_admin.html' %}
 {% block title %}
 <title>{{product.name}}</title>
 {% endblock title %}
 {% block content %}
-<div>Наименование - {{product.name}}</div>
+<h2 class="book_h2">Книга #{{product.id}}</h2>
+<p>Краткая информация о товаре</p>
+<div>Автор - {{product.author}}</div>
+<div>Название книги - '{{product.name}}'</div>
 <div>Описание - {{product.description}}</div>
 <div>Стоимость - {{product.price}}</div>
 
-<p>Краткая информация о товаре</p>
-<div>6 случайных товаров из этой категории</div>
-
-<a href="{% url 'shop:product_edit' slug=product.slug %}">Изменить товар</a>
-<a href="{% url 'shop:product_delete' slug=product.slug %}">Удалить товар</a>
+<a href="{% url 'shop:product_edit' slug=product.slug %}" class="btn btn-light">Изменить товар</a>
+<a href="{% url 'shop:product_delete' slug=product.slug %}" class="btn btn-danger">Удалить товар</a>
 
 {% endblock content %}

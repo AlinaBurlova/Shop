@@ -1,21 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'base_admin.html' %}
 {% load static %}
 {% block title %}
 <title>Информация о заказе</title>
-{% endblock title %} {% block content %}
-<h2>АДМИННОЕ</h2>
-<h2>Заказ № {{ order.number }}</h2>
-<div class="order-item">
+{% endblock title %}
+{% block content %}
+<h2 class="book_h2">Заказ № {{ order.number }}</h2>
+<div class="order-admin-item">
+  <h4 class="book_h2">Детали заказа:</h4>
   <div class="order-payment">Способ доставки: {{ order.payment }}</div>
-  <div class="order-delivery">Дата создания: {{ order.delivery }}</div>
   <div class="order-date">Способ доставки: {{ order.created_at }}</div>
+  <div class="order-delivery">Дата создания: {{ order.delivery }}</div>
 </div>
-<h2>Товары в заказе:</h2>
+<h4 class="book_h2" style="margin-top: 10px">Товары в заказе:</h4>
 {% for item in order_items %}
-<div class="item">
+<div class="order-admin-item">
   <div>Наименование: {{ item.product.name }}</div>
   <div>Количество: {{ item.quantity }}</div>
   <hr />
 </div>
 {% endfor %}
+<h4 class="book_h2">Итоговая сумма: <span class="mb-0 ms-2">{{ count }}</span></h4>
 {% endblock content %}

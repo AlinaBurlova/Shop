@@ -1,17 +1,20 @@
 {% extends 'base_admin.html' %}
 {% block title %}
 <title>{{product.name}}</title>
-{% endblock title %} {% block content %}
-<h2>Вы действительно хотите удалить следующий товар?</h2>
+{% endblock title %}
+{% block content %}
+<h2 class="book_h2">Удаление товара</h2>
+<div style="width: 70%; margin: 0 auto; margin-top: 10%;">
+<h3 class="book_h2" style="text-align: center;">Вы действительно хотите удалить следующий товар?</h3>
 <hr />
-<div>Наименование - {{product.name}}</div>
-<div>Описание - {{product.description}}</div>
+<div>Автор - {{product.author}}</div>
+<div>Название книги - {{product.name}}</div>
 <div>Стоимость - {{product.price}}</div>
 <hr />
 <form method="post">
   {% csrf_token %}
-  <button type="submit">Удалить</button>
+  <button type="submit" class="btn btn-danger">Удалить</button>
+  <a href="{% url 'shop:products' %}" class="btn btn-light">Отмена</a>
 </form>
-<a href="{% url 'shop:products' %}">Отмена</a>
 
 {% endblock content %}

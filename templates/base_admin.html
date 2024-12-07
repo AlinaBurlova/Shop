@@ -1,17 +1,77 @@
+{% load static %}
+{% load custom_tags %}
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
     {% block title %}
-    <title>Title</title>
+    <title>Магазин товаров</title>
     {% endblock title %}
-  </head>
-  <body>
-    {% block header %}
-    {% endblock header %}
+</head>
+<body style="background-color: #333; color: #fff;">
+    <header class="admin-header">
+         <nav class="header" style="background-color: #fff; color: #000;">
+          <div class="left">
+            <a href="{% url 'shop:category_add' %}" style="color: #000;">Добавить категорию</a>
+            <a href="{% url 'shop:categories' %}" style="color: #000;">Категории</a>
+            <a href="{% url 'shop:product_add' %}" style="color: #000;">Добавить товар</a>
+            <a href="{% url 'shop:products' %}" style="color: #000;">Товары</a>
+            <a href="{% url 'admin_all_orders' %}" style="color: #000;">Заказы</a>
+          </div>
+
+
+          <div class="nav-item dropdown right left-small">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'img/menu-dark.png' %}" width="20px">
+          </a>
+              <ul class="dropdown-menu drop-1" aria-labelledby="navbarScrollingDropdown">
+                  <a href="{% url 'shop:category_add' %}" style="color: #000;">Добавить категорию</a><br>
+                  <a href="{% url 'shop:categories' %}" style="color: #000;">Категории</a><br>
+                  <a href="{% url 'shop:product_add' %}" style="color: #000;">Добавить товар</a><br>
+                  <a href="{% url 'shop:products' %}" style="color: #000; ">Товары</a><br>
+                  <a href="{% url 'admin_all_orders' %}" style="color: #000; ">Заказы</a>
+              </ul>
+          </div>
+
+        <div class="nav-item dropdown right">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'img/people-dark.png' %}" width="20px">
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a href="{% url 'users:logout' %}" class="dropdown-item" style="color: #000;">Выйти</a></li>
+            <li><a href="{% url 'users:detail' pk=user.pk %}" class="dropdown-item" style="color: #000;">{{ user.username }}</a></li>
+          </ul>
+              </div>
+    </nav>
+
+    </header>
+
+    <div class="my_block">
     {% block content %}
-    {% endblock content %}
-    {% block footer %}
-    {% endblock footer %}
-  </body>
+
+    {% endblock content%}
+	</div>
+
+    <footer style="background-color: #fff; color: #000;">
+        <p>Телефон тех. поддержки: +7 (987) 654-32-10</p>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+</body>
 </html>
+

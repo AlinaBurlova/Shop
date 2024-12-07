@@ -40,8 +40,14 @@ class ProductListByCategory(ListView):
         context = super().get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
-        context['filterset'] = self.filterset
         context['current_page'] = 'shop:products'
+
+        user = get_user_model()
+        admin = user.objects.get(username='staff')
+
+        if self.request.user == admin:
+            products_admin = Product.objects.all()
+            context['products_admin'] = products_admin
 
         return context
 

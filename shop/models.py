@@ -6,11 +6,11 @@ from slugify import slugify
 class Category(models.Model):
     name = models.CharField(max_length=200, verbose_name="Категория")
     slug = models.SlugField(max_length=200, unique=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, verbose_name='Описание категории')
     image_1 = models.ImageField(upload_to='categories/image_1',
-                              blank=True)
+                              blank=True, verbose_name='Изображение №1')
     image_2 = models.ImageField(upload_to='categories/image_2',
-                                blank=True)
+                                blank=True, verbose_name='Изображение №2')
 
     class Meta:
         ordering = ['name']
@@ -37,11 +37,11 @@ class Product(models.Model):
                                  on_delete=models.CASCADE)
     author = models.CharField(max_length=75, verbose_name='Автор')
     name = models.CharField(max_length=200,
-                            verbose_name='Название')
-    description = models.TextField(blank=True)
+                            verbose_name='Название книги')
+    description = models.TextField(blank=True, verbose_name='Описание книги')
     slug = models.SlugField(max_length=200)
     image = models.ImageField(upload_to='products/%Y/%m/%d',
-                              blank=True)
+                              blank=True, verbose_name='Фото')
     price = models.DecimalField(max_digits=10,
                                 decimal_places=2)
     available = models.BooleanField(default=True)

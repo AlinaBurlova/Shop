@@ -4,21 +4,23 @@
 <title>Все заказы</title>
 {% endblock title %}
 {% block content %}
-<table style="width: 80%; text-align: justify; margin: 0 auto">
-  <thead>
+<h2 class="book_h2">Таблица заказов</h2>
+<div class="cart-detail" style="max-height: 500px;">
+<table>
+  <thead >
     <tr>
-      <th class="order-header">Номер заказа</th>
-      <th class="order-header">Пользователь</th>
-      <th class="order-header">Способ оплаты</th>
-      <th class="order-header">Способ доставки</th>
-      <th class="order-header">Дата</th>
+      <th class="order-header" style="color: black; background-color: white">Номер заказа</th>
+      <th class="order-header" style="color: black; background-color: white">Пользователь</th>
+      <th class="order-header" style="color: black; background-color: white">Способ оплаты</th>
+      <th class="order-header" style="color: black; background-color: white">Способ доставки</th>
+      <th class="order-header" style="color: black; background-color: white">Дата</th>
     </tr>
   </thead>
   <tbody>
     {% for order in orders %}
     <tr>
       <td class="order-number">
-        <a href="{% url 'order_detail' order.number %}">{{ order.number }}</a>
+        <a href="{% url 'order_detail' order.number %}" style="color: white;">{{ order.number }}</a>
       </td>
       <td class="order-delivery">{{ order.user }}</td>
       <td class="order-payment">{{ order.payment }}</td>
@@ -28,5 +30,5 @@
     {% endfor %}
   </tbody>
 </table>
-
+</div>
 {% endblock content %}

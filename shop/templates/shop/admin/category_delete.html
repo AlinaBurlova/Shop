@@ -3,15 +3,18 @@
 <title>{{category.name}}</title>
 {% endblock title %}
 {% block content %}
-<h2>Вы действительно хотите удалить следующую категорию?</h2>
-<p><b>Все товары из этой категории будут удалены!</b></p>
+<h2 class="book_h2">Удаление категории</h2>
+<div style="width: 70%; margin: 0 auto; margin-top: 10%;">
+<h3 class="book_h2" style="text-align: center;">Вы действительно хотите удалить следующую категорию?</h3>
+<p style="text-align: center;"><b>Все товары из этой категории будут удалены!</b></p>
 <hr />
-<div>Наименование - {{category.name}}</div>
+<div>Наименование категории - {{category.name}}</div>
 <hr />
 <form method="post">
   {% csrf_token %}
-  <button type="submit">Удалить</button>
+  <button type="submit" class="btn btn-danger">Удалить</button>
+  <a href="{% url 'shop:categories' %}" class="btn btn-light">Отмена</a>
 </form>
-<a href="{% url 'shop:categories' %}">Отмена</a>
+</div>
 
 {% endblock content %}
