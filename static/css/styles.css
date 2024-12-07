@@ -1035,6 +1035,10 @@ input[type="button"] {
     max-width: 55% !important;
 }
 
+.book .img-fluid {
+    max-width: 100% !important;
+}
+
 .admin-page {
     display: flex;
     align-items: center;
@@ -1399,6 +1403,10 @@ input[type="button"] {
   .admin-header .drop-1{
     width: 13rem !important;
   }
+
+  .book .img-fluid {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -1516,6 +1524,10 @@ input[type="button"] {
 
   .admin-header .drop-1{
     width: 11rem !important;
+  }
+
+  .books-lot {
+    max-width: 0;
   }
 }
 
@@ -1647,7 +1659,11 @@ input[type="button"] {
   }
 
   .order .row {
-     justify-content: space-around;
+    justify-content: space-around;
+  }
+
+  .book .card-text {
+    margin-bottom: .6rem;
   }
 }
 

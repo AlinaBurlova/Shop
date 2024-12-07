@@ -61,6 +61,7 @@ class ProductListByCategory(ListView):
             queryset = Product.objects.filter(category=category)
 
         query = self.request.GET.get('query')
+        self.query = query
         if query:
             queryset = queryset.filter(Q(name__icontains=query))
 
