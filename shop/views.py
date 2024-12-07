@@ -222,23 +222,22 @@ class CategoryDeleteView(DeleteView):
     slug_url_kwarg = 'slug'
 
 
-def product_search(request):
+def product_search(request, category):
+    query = request.GET.get('query', '')
+    query_text = Q(name__contains=query)
 
+    if category != 'all':
+        category_obj = Category.objects.get(slug=category)
+        results = Product.objects.filter(query_text, category=category_obj)
+    else:
+        results = Product.objects.filter(query_text)
 
-    query = request.GET.get('query')
-    queryset = Product.objects.all()
+    filterset = ProductFilter(request.GET, results)
 
-    if query:
-        queryset = queryset.filter(Q(name__icontains=query))
-
-    filterset = ProductFilter(request.GET, queryset)
-
-    results = filterset.qs
     categories = Category.objects.all()
 
-    paginator = Paginator(results, 3)
+    paginator = Paginator(filterset.qs, 3)
     page_number = request.GET.get('page')
-
     page_obj = paginator.get_page(page_number)
 
     context = {

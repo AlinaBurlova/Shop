@@ -25,8 +25,6 @@ class ProductFilter(django_filters.FilterSet):
         super().__init__(*args, **kwargs)
         self.data = self.data.copy()
         max_price = Product.objects.aggregate(Max('price'))['price__max']
-        if 'available' not in self.data:
-            self.data['available'] = 'on'
         if 'price_min' not in self.data:
             self.data['price_min'] = 0
         if 'price_max' not in self.data:

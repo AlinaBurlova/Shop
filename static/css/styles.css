@@ -334,6 +334,10 @@ footer p {
   padding: 6px 9px;
 }
 
+.filters input[type=checkbox]:checked {
+  background-color: #6c757d;
+}
+
 .filter-btns {
   display: flex;
   flex-direction: column;
@@ -1588,7 +1592,6 @@ input[type="button"] {
   .order .row {
      justify-content: space-around;
   }
-
 }
 
 @media screen and (max-width: 420px) {

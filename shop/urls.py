@@ -22,6 +22,9 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view(), name='categories'),
 
     path('search/', product_search, name='product_search'),
+    path('search/<str:category>/', product_search, name="product_search"),
+    path('search/all/', product_search, name="product_search"),
+
 
 
     path('list/', ProductListByCategory.as_view(), name='products'),

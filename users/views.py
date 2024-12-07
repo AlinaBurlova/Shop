@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model, upd
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
+from cart.views import Cart, ProductCartUser
 from website_shop.settings import LOGIN_REDIRECT_URL
 from .forms import UserRegistrationForm, ChangePasswordForm, UserProfileForm
 
@@ -42,6 +43,10 @@ def log_in(request):
         if user:
             login(request, user)
             url = request.GET.get('next', LOGIN_REDIRECT_URL)
+            cart = Cart(request)
+            cart_user = ProductCartUser(request)
+            cart_user.cart.update(cart.cart)
+            cart_user.save()
             return redirect(url)
     context = {'form': form, 'current_page': 'users:login'}
     return render(request, template_name='users/login.html', context=context)
@@ -64,6 +69,7 @@ def user_detail(request, pk):
         'user': user,
         'title': 'Информация о профиле',
         'order_count': order_count,
+        'current_page': 'users:detail',
     }
     return render(request, template_name='users/profile.html', context=context)
 

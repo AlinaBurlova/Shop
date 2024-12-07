@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -62,14 +64,14 @@
               {% endif %}
               {% if user.is_authenticated %}
             <li><a href="{% url 'users:logout' %}" class="dropdown-item">Выйти</a></li>
-            <li><a href="{% url 'users:detail' pk=user.pk %}" class="dropdown-item">{{ user.username }}</a></li>
+            <li><a href="{% url 'users:detail' pk=user.pk %}" class="dropdown-item {% if current_page == 'users:detail' %}active{% endif %}">{{ user.username }}</a></li>
               {% endif %}
           </ul>
               </div>
     </nav>
 
     </header>
-    <form class="search" action="{% url 'shop:product_search' %}" method="get">
+    <form class="search" action="{% url 'shop:product_search' request.path|category_path %}" method="get">
         <input type="search" name="query" value="{{ query|default:'' }}">
         <button type="submit" class="btn btn-secondary" style="padding: 3px 5px; margin: 0;">Поиск</button>
     </form>
