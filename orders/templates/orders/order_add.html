@@ -1,60 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}
 <title>Оформление заказа</title>
-{% endblock title %}
-
-{% block content %}
-<h2 class="order-h2">Ваш заказ: </h2>
+{% endblock title %} {% block content %}
+<h2 class="order-h2">Ваш заказ:</h2>
 <div class="cart-detail">
-<table class="cart-title" style="width:80%; text-align:justify; margin:0 auto;">
+  <table
+    class="cart-title"
+    style="width: 80%; text-align: justify; margin: 0 auto"
+  >
     <thead>
-    <tr>
+      <tr>
         <th>№</th>
         <th>Наименование</th>
         <th>Цена</th>
         <th>Количество</th>
         <th>Стоимость</th>
-    </tr>
+      </tr>
     </thead>
     <tbody>
-
-    {% for item in cart %}
-    {% with product=item.product %}
-    <tr>
-        <td style="text-align: center;">
-            {{ forloop.counter }}
+      {% for item in cart %}
+      {% with product=item.product %}
+      <tr>
+        <td style="text-align: center">{{ forloop.counter }}</td>
+        <td>{{ product.name }}</td>
+        <td style="text-align: center">
+          <span id="productPrice">{{ product.price|floatformat:0 }}</span> руб.
         </td>
-        <td>
-            {{ product.name }}
+        <td style="text-align: center">{{ item.quantity }}</td>
+        <td style="text-align: center">
+          <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span> руб.
         </td>
-        <td style="text-align: center;">
-            <span id="productPrice">{{ product.price|floatformat:0 }}</span> руб.
-        </td>
-        <td style="text-align: center;">
-            {{ item.quantity }}
-        </td>
-        <td style="text-align: center;">
-            <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span>  руб.
-        </td>
-    </tr>
-    {% endwith %}
-    {% endfor %}
+      </tr>
+      {% endwith %}
+      {% endfor %}
     </tbody>
-</table>
+  </table>
 </div>
 <div class="order-price">
+  <div>
+    <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
     <div>
-        <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
-        <div>Заказ на сумму: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
+      Заказ на сумму:
+      <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span>
     </div>
+  </div>
 </div>
 
 <form action="{% url 'new_order' %}" method="post" class="order-choice">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Оформить</button>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Оформить</button>
 </form>
 
 {% endblock content %}

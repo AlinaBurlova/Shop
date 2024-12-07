@@ -1,45 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 {% if orders|length != 0%}
 <h2 class="order-h2">Мои заказы:</h2>
 <div class="cart-detail">
-<table>
+  <table>
     <thead>
-    <tr>
+      <tr>
         <th class="order-header">Номер заказа</th>
+        <th class="order-header">Способ оплаты</th>
         <th class="order-header">Способ доставки</th>
         <th class="order-header">Дата создания</th>
-        <th class="order-header">Способ доставки</th>
-    </tr>
+      </tr>
     </thead>
     <tbody>
-    {% for order in orders %}
-    <tr>
-        <td class="order-number">
-            <a href="{% url 'order_detail' order.number %}">{{ order.number }}</a>
+      {% for order in orders %}
+      <tr>
+        <td class="order-number" style="text-align: center;">
+          <a href="{% url 'order_detail' order.number %}">{{ order.number }}</a>
         </td>
-        <td class="order-payment">
-            {{ order.payment }}
-        </td>
-        <td class="order-delivery">
-            {{ order.delivery }}
-        </td>
-        <td class="order-date">
-            {{ order.created_at }}
-        </td>
-    </tr>
-    {% endfor %}
+        <td class="order-payment" style="text-align: center;">{{ order.payment }}</td>
+        <td class="order-delivery" style="text-align: center;">{{ order.delivery }}</td>
+        <td class="order-date" style="text-align: center;">{{ order.created_at }}</td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
+  </table>
 </div>
 {% else %}
 
-<p class="cart-empty">
-    Заказов нет😭
-</p>
+<p class="cart-empty">Заказов нет😭</p>
 
 {% endif %}
-
 {% endblock content %}

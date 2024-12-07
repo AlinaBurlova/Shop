@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static%}
-
 {% block content %}
-{% if cart|length != 0%}
+{% if cart|length != 0 %}
 <h2 class="cart-h2">Корзина</h2>
 <div class="cart-detail">
-<table>
+  <table>
     <thead>
-    <tr >
+      <tr>
         <th class="delete">№</th>
         <th class="delete">Изображение</th>
         <th>Наименование</th>
@@ -16,296 +15,330 @@
         <th>Стоимость</th>
         <th>Удалить</th>
         <th class="delete cross-del">Быстрое удаление</th>
-    </tr>
+      </tr>
     </thead>
     <tbody>
-
-    {% for item in cart %}
-    {% with product=item.product %}
-    <tr>
-        <input type="hidden" value="{{product.id}}" id="productId">
-        <td style="text-align: center;" class="delete">
-            {{ forloop.counter }}
-        </td>
-        <td style="text-align: center;" class="delete">
-            {% if product.image %}
-            <img
+      {% for item in cart %}
+      {% with product=item.product %}
+      <tr>
+        <input type="hidden" value="{{product.id}}" id="productId" />
+        <td style="text-align: center" class="delete">{{ forloop.counter }}</td>
+        <td style="text-align: center" class="delete">
+          {% if product.image %}
+          <img
             src="{{ product.image.url }}"
             alt="{{ product.name }}"
-            style="width: 30px; height: 30px;">
-             {% else %}
-            <img
+            style="width: 30px; height: 30px"
+          />
+          {% else %}
+          <img
             src="{% static 'img/no_image.png' %}"
             class="card-img-top"
             alt="{{ product.name }}"
-            style="width: 30px; height: 30px;">
-            {% endif %}
+            style="width: 30px; height: 30px"
+          />
+          {% endif %}
         </td>
-        <td>
-            {{ product.name }}
+        <td>{{ product.name }}</td>
+        <td style="text-align: center">
+          <span id="productPrice">{{ product.price|floatformat:0 }}</span> руб.
         </td>
-        <td style="text-align: center;">
-            <span id="productPrice">{{ product.price|floatformat:0 }}</span> руб.
+        <td style="text-align: center">
+          <input
+            style="width: 100%"
+            id="prod_quantity"
+            name="prod_quantity"
+            type="number"
+            min="1"
+            max="100000"
+            value="{{ item.quantity }}"
+          />
         </td>
-        <td style="text-align: center;">
-            <input style="width: 100%;" id="prod_quantity" name="prod_quantity" type="number" min="1" max="100000" value="{{ item.quantity }}">
+        <td style="text-align: center">
+          <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span> руб.
         </td>
-        <td style="text-align: center;">
-            <span id="itemPrice">{{ item.total_price|floatformat:0 }}</span>  руб.
+        <td style="text-align: center">
+          <a href="{% url 'cart:remove_product' product.id %}"
+            ><img style="width: 30px" src="{% static 'img/cross.png' %}"
+          /></a>
         </td>
-        <td style="text-align: center;">
-           <a href="{% url 'cart:remove_product' product.id %}"><img style="width: 30px;" src="{% static 'img/cross.png' %}"></a>
+        <td style="text-align: center" class="delete cross-del">
+          <button
+            class="removeFetch btn btn-danger"
+            style="padding: 0.5px 5px; margin-top: 0"
+          >
+            ***
+          </button>
         </td>
-        <td style="text-align: center;" class="delete cross-del"><button class="removeFetch btn btn-danger" style="padding: 0.5px 5px; margin-top: 0;">***</button></td>
-
-
-    </tr>
-    {% endwith %}
-    {% endfor %}
+      </tr>
+      {% endwith %}
+      {% endfor %}
     </tbody>
-</table>
-    </div>
-
-<div class="card-price">
-    <div style="flex-direction: column;">
-    <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
-    <div>Сумма товаров в корзине: <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span></div>
-     <a href="{% url 'cart:remove_cart' %}" class="btn btn-secondary cart-btn">Очистить корзину</a>
-     </div>
-
-    <div style="padding-top: 10px">
-    {% if not request.user.id %}
-        <a href="#" class="btn btn-primary cart-btn" id="newOrder">Оформить заказ</a>
-    {% else %}
-        <a href="{% url 'new_order' %}" class="btn btn-primary cart-btn" id="newOrderUser">Оформить</a>
-    {% endif %}
-        </div>
-
+  </table>
 </div>
 
+<div class="card-price">
+  <div style="flex-direction: column">
+    <div>Товаров в корзине: <span id="cartLength">{{ cart|length }}</span></div>
+    <div>
+      Сумма товаров в корзине:
+      <span id="totalPriceCart">{{ cart.get_total_price|floatformat:0 }}</span>
+    </div>
+    <a href="{% url 'cart:remove_cart' %}" class="btn btn-secondary cart-btn"
+      >Очистить корзину</a
+    >
+  </div>
+
+  <div style="padding-top: 10px">
+    {% if not request.user.id %}
+    <a href="#" class="btn btn-primary cart-btn" id="newOrder"
+      >Оформить заказ</a
+    >
+    {% else %}
+    <a
+      href="{% url 'new_order' %}"
+      class="btn btn-primary cart-btn"
+      id="newOrderUser"
+      >Оформить</a
+    >
+    {% endif %}
+  </div>
+</div>
 
 <div id="orderModal" class="modal-my">
-    <div class="modal-content-my">
-        <span class="close" id="closeOrder">&times;</span>
-        <h4 style="margin-top: 7px;">Войдите или купите в 1 клик</h4>
-        <a href="{% url 'users:login' %}" id="login" class="btn btn-primary">Войти</a>
-        <a href="#" id="quickOrderBtn" class="btn btn-primary">Купить в 1 клик</a>
-    </div>
+  <div class="modal-content-my">
+    <span class="close" id="closeOrder">&times;</span>
+    <h4 style="margin-top: 7px">Войдите или купите в 1 клик</h4>
+    <a href="{% url 'users:login' %}" id="login" class="btn btn-primary"
+      >Войти</a
+    >
+    <a href="#" id="quickOrderBtn" class="btn btn-primary">Купить в 1 клик</a>
+  </div>
 </div>
 
 <div id="orderFormModal" class="modal-my__order-form">
-    <div class="modal-content-my__order-form">
-        <span class="close" id="closeOrderForm">&times;</span>
-        <h4>Заполните информацию о заказе</h4>
-        <form action="#" method="post" class="order-choice modal-choice">
-            {{ quick_order_form.as_p }}
-            {% csrf_token %}
-        <input type="button" id="createQuickOrderBtn" value="Оформить" class="btn btn-secondary">
-        </form>
-    </div>
+  <div class="modal-content-my__order-form">
+    <span class="close" id="closeOrderForm">&times;</span>
+    <h4>Заполните информацию о заказе</h4>
+    <form action="#" method="post" class="order-choice modal-choice">
+      {{ quick_order_form.as_p }}
+      {% csrf_token %}
+      <input
+        type="button"
+        id="createQuickOrderBtn"
+        value="Оформить"
+        class="btn btn-secondary"
+      />
+    </form>
+  </div>
 </div>
 
 {% else %}
 
-<p class="cart-empty">
-    Корзина пуста😭
-</p>
+<p class="cart-empty">Корзина пуста😭</p>
 
 {% endif %}
 
-
 <script>
-    async function removeItemFetch(event){
-        let productId = event.target.parentElement.parentElement.querySelector("#productId").value
+  async function removeItemFetch(event) {
+    let productId =
+      event.target.parentElement.parentElement.querySelector(
+        "#productId"
+      ).value;
 
-        let itemInfo = {
-            productIdValue: productId,
-        };
-
-        let response = await fetch('/cart/remove_fetch/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify(itemInfo),
-        });
-        }
-
-    async function removeItem(event){
-        await removeItemFetch(event);
-        afterRemoveItem(event.target.parentElement.parentElement)
-        setTimeout(updatePrice.bind(null, event), 2000);
-    }
-
-    async function getCartLength(){
-        let response = await fetch('/cart/length/', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-
-        });
-
-        let result = await response.json();
-        alert("Товаров в корзине: " + result.cart_length);
+    let itemInfo = {
+      productIdValue: productId,
     };
 
+    let response = await fetch("/cart/remove_fetch/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(itemInfo),
+    });
+  }
 
-    function getTotalPriceCart(){
-        let itemPriceInputs = document.querySelectorAll("#itemPrice");
-        let totalPrice = 0;
-        itemPriceInputs.forEach((item, index)=>{
-            totalPrice += +item.textContent;
-            });
-        let totalPriceCart = document.querySelector("#totalPriceCart");
-        totalPriceCart.textContent = totalPrice;
-        return totalPrice;
-    }
+  async function removeItem(event) {
+    await removeItemFetch(event);
+    afterRemoveItem(event.target.parentElement.parentElement);
+    setTimeout(updatePrice.bind(null, event), 2000);
+  }
 
-    function getQuantityInCart(){
-        let cartLengthHeader = document.querySelector("#cartLengthHeader")
-        let quantityInputs = document.querySelectorAll("#prod_quantity");
-        let allQuantity = 0;
-        quantityInputs.forEach((item,index)=>{
-            allQuantity += +item.value;
-        });
-        let cartLength = document.querySelector("#cartLength");
-        cartLength.textContent = allQuantity;
-        cartLengthHeader.textContent = allQuantity;
-        return allQuantity;
-    }
-
-    function updatePrice(event){
-        let quantity = event.target.value;
-        let itemPrice = event.target.parentElement.parentElement.querySelector("#itemPrice")
-        let productPrice = event.target.parentElement.parentElement.querySelector("#productPrice").textContent
-        productPrice = Number(productPrice.replace(",","."))
-
-        let newItemPrice = productPrice * quantity;
-        itemPrice.textContent = newItemPrice;
-        getQuantityInCart();
-        getTotalPriceCart();
-
-    };
-
-    function afterRemoveItem(item){
-        item.remove()
-    }
-
-    async function saveCartInSession(event){
-        let productId = event.target.parentElement.parentElement.querySelector("#productId").value
-        let quantity = event.target.value;
-
-        let cartInfo = {
-            productIdValue: productId,
-            quantityValue: quantity,
-            totalQuantity: getQuantityInCart(),
-            totalPrice: getTotalPriceCart(),
-        };
-
-        let response = await fetch('/cart/update_cart_session/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify(cartInfo),
-        });
+  async function getCartLength() {
+    let response = await fetch("/cart/length/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    });
 
     let result = await response.json();
+    alert("Товаров в корзине: " + result.cart_length);
+  }
+
+  function getTotalPriceCart() {
+    let itemPriceInputs = document.querySelectorAll("#itemPrice");
+    let totalPrice = 0;
+    itemPriceInputs.forEach((item, index) => {
+      totalPrice += +item.textContent;
+    });
+    let totalPriceCart = document.querySelector("#totalPriceCart");
+    totalPriceCart.textContent = totalPrice;
+    return totalPrice;
+  }
+
+  function getQuantityInCart() {
+    let cartLengthHeader = document.querySelector("#cartLengthHeader");
+    let quantityInputs = document.querySelectorAll("#prod_quantity");
+    let allQuantity = 0;
+    quantityInputs.forEach((item, index) => {
+      allQuantity += +item.value;
+    });
+    let cartLength = document.querySelector("#cartLength");
+    cartLength.textContent = allQuantity;
+    cartLengthHeader.textContent = allQuantity;
+    return allQuantity;
+  }
+
+  function updatePrice(event) {
+    let quantity = event.target.value;
+    let itemPrice =
+      event.target.parentElement.parentElement.querySelector("#itemPrice");
+    let productPrice =
+      event.target.parentElement.parentElement.querySelector(
+        "#productPrice"
+      ).textContent;
+    productPrice = Number(productPrice.replace(",", "."));
+
+    let newItemPrice = productPrice * quantity;
+    itemPrice.textContent = newItemPrice;
+    getQuantityInCart();
+    getTotalPriceCart();
+  }
+
+  function afterRemoveItem(item) {
+    item.remove();
+  }
+
+  async function saveCartInSession(event) {
+    let productId =
+      event.target.parentElement.parentElement.querySelector(
+        "#productId"
+      ).value;
+    let quantity = event.target.value;
+
+    let cartInfo = {
+      productIdValue: productId,
+      quantityValue: quantity,
+      totalQuantity: getQuantityInCart(),
+      totalPrice: getTotalPriceCart(),
     };
-    const quantityInput = document.querySelectorAll("#prod_quantity")
-    quantityInput.forEach((item)=>{item.addEventListener('change', updatePrice)})
-    quantityInput.forEach((item)=>{item.addEventListener('change', saveCartInSession)})
 
-    const newOrderBtn = document.querySelector("#newOrder")
-    // newOrderBtn.addEventListener('click', getCartLength)
-
-    const itemsRemove = document.querySelectorAll(".removeFetch")
-    itemsRemove.forEach((item)=>{item.addEventListener('click', removeItem)})
-
-
-    // ===================== ORDER MODAL =====================
-    // Получаем элемент модального окна
-    const orderModal = document.getElementById("orderModal");
-    const orderFormModal = document.getElementById("orderFormModal");
-
-    // Получаем кнопку для открытия модального окна
-    const orderBtn = document.querySelector("#newOrder");
-    const quickOrderBtn = document.querySelector("#quickOrderBtn");
-
-    // Получаем элемент закрытия модального окна
-    const closeOrder = document.getElementById("closeOrder");
-    const closeOrderForm = document.getElementById("closeOrderForm");
-
-    // Открываем модальное окно для заказа
-    orderBtn.onclick = function() {
-        orderModal.style.display = "block";
-    }
-
-    // Открываем модальное окно для быстрого заказа
-    quickOrderBtn.onclick = function() {
-        orderFormModal.style.display = "block";
-        orderModal.style.display = "none";
-    }
-
-    // Закрытие модального окна для заказа
-    closeOrder.onclick = function() {
-        orderModal.style.display = "none";
-    }
-
-    // Закрываем модальное окно для быстрого заказа
-    closeOrderForm.onclick = function() {
-        orderFormModal.style.display = "none";
-    }
-
-    // Закрываем модальное окно при клике вне его области
-    window.onclick = function(event) {
-        if (event.target === orderModal) {
-            orderModal.style.display = "none";
-        }
-        if (event.target === orderFormModal) {
-            orderFormModal.style.display = "none";
-        }
-    }
-
-    // ===================== CREATE QUICK ORDER =====================
-    const createQuickOrderBtn = document.querySelector("#createQuickOrderBtn");
-
-    async function createQuickOrder(event){
-        const myForm = event.target.parentElement;
-        const name = myForm.name.value;
-        const lastName = myForm.last_name.value;
-        const email = myForm.email.value;
-        const phone = myForm.phone.value;
-        const payment = myForm.payment.value;
-        const delivery = myForm.delivery.value;
-
-        let orderInfo = {
-            "name": name,
-            "lastName": lastName,
-            "email": email,
-            "phone": phone,
-            "payment": payment,
-            "delivery": delivery,
-        };
-
-        let response = await fetch('/orders/new/quick/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify(orderInfo),
-        });
+    let response = await fetch("/cart/update_cart_session/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(cartInfo),
+    });
 
     let result = await response.json();
-    alert('Заказ успешно создан!')
+  }
+  const quantityInput = document.querySelectorAll("#prod_quantity");
+  quantityInput.forEach((item) => {
+    item.addEventListener("change", updatePrice);
+  });
+  quantityInput.forEach((item) => {
+    item.addEventListener("change", saveCartInSession);
+  });
+
+  const newOrderBtn = document.querySelector("#newOrder");
+  // newOrderBtn.addEventListener('click', getCartLength)
+
+  const itemsRemove = document.querySelectorAll(".removeFetch");
+  itemsRemove.forEach((item) => {
+    item.addEventListener("click", removeItem);
+  });
+
+  // ===================== ORDER MODAL =====================
+  // Получаем элемент модального окна
+  const orderModal = document.getElementById("orderModal");
+  const orderFormModal = document.getElementById("orderFormModal");
+
+  // Получаем кнопку для открытия модального окна
+  const orderBtn = document.querySelector("#newOrder");
+  const quickOrderBtn = document.querySelector("#quickOrderBtn");
+
+  // Получаем элемент закрытия модального окна
+  const closeOrder = document.getElementById("closeOrder");
+  const closeOrderForm = document.getElementById("closeOrderForm");
+
+  // Открываем модальное окно для заказа
+  orderBtn.onclick = function () {
+    orderModal.style.display = "block";
+  };
+
+  // Открываем модальное окно для быстрого заказа
+  quickOrderBtn.onclick = function () {
+    orderFormModal.style.display = "block";
+    orderModal.style.display = "none";
+  };
+
+  // Закрытие модального окна для заказа
+  closeOrder.onclick = function () {
+    orderModal.style.display = "none";
+  };
+
+  // Закрываем модальное окно для быстрого заказа
+  closeOrderForm.onclick = function () {
+    orderFormModal.style.display = "none";
+  };
+
+  // Закрываем модальное окно при клике вне его области
+  window.onclick = function (event) {
+    if (event.target === orderModal) {
+      orderModal.style.display = "none";
+    }
+    if (event.target === orderFormModal) {
+      orderFormModal.style.display = "none";
+    }
+  };
+
+  // ===================== CREATE QUICK ORDER =====================
+  const createQuickOrderBtn = document.querySelector("#createQuickOrderBtn");
+
+  async function createQuickOrder(event) {
+    const myForm = event.target.parentElement;
+    const name = myForm.name.value;
+    const lastName = myForm.last_name.value;
+    const email = myForm.email.value;
+    const phone = myForm.phone.value;
+    const payment = myForm.payment.value;
+    const delivery = myForm.delivery.value;
+
+    let orderInfo = {
+      name: name,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      payment: payment,
+      delivery: delivery,
+    };
+
+    let response = await fetch("/orders/new/quick/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(orderInfo),
+    });
+
+    let result = await response.json();
+    alert("Заказ успешно создан!");
     window.location.replace("{% url 'shop:index' %}");
-    };
+  }
 
-    createQuickOrderBtn.addEventListener('click', createQuickOrder)
-
-
-
-
+  createQuickOrderBtn.addEventListener("click", createQuickOrder);
 </script>
 {% endblock content %}

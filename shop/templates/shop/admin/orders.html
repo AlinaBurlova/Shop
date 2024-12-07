@@ -1,42 +1,32 @@
 {% extends 'base_admin.html' %}
 {% load static %}
-
 {% block title %}
 <title>Все заказы</title>
 {% endblock title %}
-
 {% block content %}
-<table style="width:80%; text-align:justify; margin:0 auto;">
-    <thead>
+<table style="width: 80%; text-align: justify; margin: 0 auto">
+  <thead>
     <tr>
-        <th class="order-header">Номер заказа</th>
-        <th class="order-header">Пользователь</th>
-        <th class="order-header">Способ оплаты</th>
-        <th class="order-header">Способ доставки</th>
-        <th class="order-header">Дата</th>
+      <th class="order-header">Номер заказа</th>
+      <th class="order-header">Пользователь</th>
+      <th class="order-header">Способ оплаты</th>
+      <th class="order-header">Способ доставки</th>
+      <th class="order-header">Дата</th>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     {% for order in orders %}
     <tr>
-        <td class="order-number">
-            <a href="{% url 'order_detail' order.number %}">{{ order.number }}</a>
-        </td>
-        <td class="order-delivery">
-            {{ order.user }}
-        </td>
-        <td class="order-payment">
-            {{ order.payment }}
-        </td>
-        <td class="order-delivery">
-            {{ order.delivery }}
-        </td>
-        <td class="order-date">
-            {{ order.created_at }}
-        </td>
+      <td class="order-number">
+        <a href="{% url 'order_detail' order.number %}">{{ order.number }}</a>
+      </td>
+      <td class="order-delivery">{{ order.user }}</td>
+      <td class="order-payment">{{ order.payment }}</td>
+      <td class="order-delivery">{{ order.delivery }}</td>
+      <td class="order-date">{{ order.created_at }}</td>
     </tr>
     {% endfor %}
-    </tbody>
+  </tbody>
 </table>
 
 {% endblock content %}

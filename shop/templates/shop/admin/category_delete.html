@@ -1,18 +1,16 @@
 {% extends 'base_admin.html' %}
-
 {% block title %}
 <title>{{category.name}}</title>
 {% endblock title %}
-
 {% block content %}
-Вы действительно хотите удалить следующую категорию?
+<h2>Вы действительно хотите удалить следующую категорию?</h2>
 <p><b>Все товары из этой категории будут удалены!</b></p>
-<hr>
+<hr />
 <div>Наименование - {{category.name}}</div>
-<hr>
+<hr />
 <form method="post">
-    {% csrf_token %}
-    <button type="submit">Удалить</button>
+  {% csrf_token %}
+  <button type="submit">Удалить</button>
 </form>
 <a href="{% url 'shop:categories' %}">Отмена</a>
 

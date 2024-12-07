@@ -1,19 +1,16 @@
 {% extends 'base_admin.html' %}
-
 {% block title %}
 <title>{{product.name}}</title>
-{% endblock title %}
-
-{% block content %}
-Вы действительно хотите удалить следующий товар?
-<hr>
+{% endblock title %} {% block content %}
+<h2>Вы действительно хотите удалить следующий товар?</h2>
+<hr />
 <div>Наименование - {{product.name}}</div>
 <div>Описание - {{product.description}}</div>
 <div>Стоимость - {{product.price}}</div>
-<hr>
+<hr />
 <form method="post">
-    {% csrf_token %}
-    <button type="submit">Удалить</button>
+  {% csrf_token %}
+  <button type="submit">Удалить</button>
 </form>
 <a href="{% url 'shop:products' %}">Отмена</a>
 

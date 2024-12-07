@@ -4,51 +4,59 @@
 {% block title %}
 <title>Список товаров</title>
 {% endblock title %}
-
 {% block content %}
 <div class="product-list-big">
-<div class="cards">
-{% for product in products %}
-<div class="card">
-  <div class="card__top">
-    {% if product.image %}
-    <img
-      src="{{ product.image.url }}"
-      class="card-img-top"
-      alt="{{ product.name }}"
-      style="width: 100%; height: 200px; object-fit: cover"
-    />
-    {% else %}
-    <img
-      src="{% static 'img/no_image.png' %}"
-      class="card-img-top"
-      alt="{{ product.name }}"
-      style="width: 100%; height: 200px; object-fit: cover"
-    />
-    {% endif %}
-  </div>
-  <div class="card__bottom">
-    <div class="card__prices">
-        <div class="card__price">{{product.price}}</div>
-        <div class="card__category">{{product.category}}</div>
+  <div class="cards">
+    {% for product in products %}
+    <div class="card">
+      <div class="card__top">
+        {% if product.image %}
+        <img
+          src="{{ product.image.url }}"
+          class="card-img-top"
+          alt="{{ product.name }}"
+          style="width: 100%; height: 200px; object-fit: cover"
+        />
+        {% else %}
+        <img
+          src="{% static 'img/no_image.png' %}"
+          class="card-img-top"
+          alt="{{ product.name }}"
+          style="width: 100%; height: 200px; object-fit: cover"
+        />
+        {% endif %}
+      </div>
+      <div class="card__bottom">
+        <div class="card__prices">
+          <div class="card__price">{{product.price}}</div>
+          <div class="card__category">{{product.category}}</div>
+        </div>
+        <a href="{{ product.get_absolute_url }}" class="card__title">
+          {{product.name}}
+        </a>
+        <div class="card__btns">
+          <a href="{{ product.get_absolute_url }}" class="card__btns__btn"
+            >Подробнее</a
+          >
+          {% if product.id|string_value in cart.cart %}
+          <a
+            href="{% url 'shop:add_to_cart' product.slug %}"
+            class="card__btns__btn"
+            >Добавлено {{cart|count_items:product.id|string_value}}</a
+          >
+          {% else %}
+          <a
+            href="{% url 'shop:add_to_cart' product.slug %}"
+            class="card__btns__btn"
+            >В корзину</a
+          >
+          {% endif %}
+        </div>
+      </div>
     </div>
-    <a href="{{ product.get_absolute_url }}" class="card__title">
-      {{product.name}}
-    </a>
-      <div class="card__btns">
-    <a href="{{ product.get_absolute_url }}" class="card__btns__btn">Подробнее</a>
-    {% if product.id|string_value in cart.cart %}
-          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">Добавлено {{cart|count_items:product.id|string_value}}</a>
-    {% else %}
-          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">В корзину</a>
-    {% endif %}
 
-          </div>
+    {% endfor %}
   </div>
-</div>
-
-{% endfor %}
-</div>
 </div>
 
 {% endblock content %}

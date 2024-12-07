@@ -2,9 +2,16 @@
 {% block title %}
 <title>{{title}}</title>
 {% endblock title %}
-
 {% block content %}
-
-<h2 style="text-align: center; padding-top: 15%; width: fit-content; margin: 0 auto;"> Пользователь {{ user.username }} успешно изменен</h2>
+<h2
+  style="
+    text-align: center;
+    padding-top: 15%;
+    width: fit-content;
+    margin: 0 auto;
+  "
+>
+  Пользователь {{ user.username }} успешно изменен
+</h2>
 
 {% endblock content %}

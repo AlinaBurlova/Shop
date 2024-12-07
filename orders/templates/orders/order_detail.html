@@ -1,25 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}
 <title>Информация о заказе</title>
 {% endblock title %}
-
 {% block content %}
 
 <h2>Заказ № {{ order.number }}</h2>
-<div class="order-item">
-        <div class="order-payment">Способ доставки: {{ order.payment }}</div>
-        <div class="order-delivery">Дата создания: {{ order.delivery }}</div>
-        <div class="order-date">Способ доставки: {{ order.created_at }}</div>
-</div>
-<h2>Товары в заказе:</h2>
-{% for item in order_items %}
-<div class="item">
-        <div>Наименование: {{ item.product.name }}</div>
-        <div>Количество: {{ item.quantity }}</div>
-        <hr>
-</div>
-{% endfor %}
+
+<section class="h-100 gradient-custom order">
+  <div class="container py-2 h-100">
+    <div class="row d-flex align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <p class="lead fw-normal mb-0">Содержимое</p>
+              <p class="small text-muted mb-0 number-order">Номер заказа : {{ order.number }}</p>
+            </div>
+
+            <div class="card shadow-0 border mb-4">
+              {% for item in order_items %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2 img-div">
+
+                    {% if item.product.image %}
+                    <img
+                      src="{{ item.product.image.url }}"
+                      class="img-fluid"
+                      alt="{{ item.product.name }}"
+                    />
+                    {% else %}
+                    <img
+                      src="{% static 'img/no_image.png' %}"
+                      class="img-fluid"
+                      alt="{{ item.product.name }}"
+                    />
+                    {% endif %}
+                  </div>
+                  <div class="col-md-2 text-center d-flex align-items-center">
+                    <p class="text-muted mb-0 order-aut" >{{ item.product.author }}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex align-items-center">
+                    <p class="text-muted mb-0 small">{{ item.product.name }}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex align-items-center">
+                    <p class="text-muted mb-0 small order-cat">Категория: {{ item.product.category }}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex align-items-center">
+                    <p class="text-muted mb-0 small order-count">Количество: {{ item.quantity }}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex align-items-center">
+                    <p class="text-muted mb-0 small">{{ item.product.price }} руб.</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+
+            <div class="d-flex justify-content-between">
+              <p class="fw-bold mb-0">Детали заказа</p>
+            </div>
+
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0">Дата создания : {{ order.created_at }}</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0">Способ оплаты: {{ order.payment }}</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0">Способ доставки: {{ order.delivery }}</p>
+            </div>
+
+          </div>
+          <div class="card-footer border-0 px-4 bg-secondary"
+            style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <p class="d-flex align-items-center justify-content-end text-white mb-0">Итоговая сумма: <span class="mb-0 ms-2">{{ count }}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
 {% endblock content %}

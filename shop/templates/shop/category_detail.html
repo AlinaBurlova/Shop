@@ -1,106 +1,102 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_tags %}
-
 {% block title %}
 <title>{{category.name}}</title>
 {% endblock title %}
-
 {% block content %}
 <div class="cat">
-<div class="{% if category.id|is_even %}cat_right{% else %}cat_left{% endif %}">
+  <div
+    class="{% if category.id|is_even %}cat_right{% else %}cat_left{% endif %}"
+  >
     {% if category.name == 'Детективы' %}
     <div class="det">
-        {% if category.image_2 %}
-    <img
-      src="{{ category.image_2.url }}"
-      class="category-img category-det-2"/>
-        {% endif %}
-    <h1 class="name"><span>Д</span>етективы</h1>
+      {% if category.image_2 %}
+      <img
+        src="{{ category.image_2.url }}"
+        class="category-img category-det-2"
+      />
+      {% endif %}
+      <h1 class="name"><span>Д</span>етективы</h1>
     </div>
     {% else %}
     <h1>{{category.name}}</h1>
     {% endif %}
 
-<p>{{category.description}}</p>
-</div>
+    <p>{{category.description}}</p>
+  </div>
 
-<div class="{% if category.id|is_even %}cat_cards-2{% else %}cat_cards-1{% endif %}">
-<h2>Книги из этой категории:</h2>
-<div class="cards">
-    {% for product in products %}
-    <div class="card">
-  <div class="card__top">
-    {% if product.image %}
-    <img
-      src="{{ product.image.url }}"
-      class="card-img-top"
-      alt="{{ product.name }}"
-      style="width: 100%; height: 180px; object-fit: cover"
-    />
-    {% else %}
-    <img
-      src="{% static 'img/no_image.png' %}"
-      class="card-img-top"
-      alt="{{ product.name }}"
-      style="width: 100%; height: 180px; object-fit: cover"
-    />
-    {% endif %}
-  </div>
-  <div class="card__bottom">
-    <div class="card__prices">
-        <div class="card__price">{{product.price}}</div>
-        <div class="card__category">{{product.category}}</div>
-    </div>
-    <a href="{{ product.get_absolute_url }}" class="card__title">
-      {{product.name}}
-    </a>
-      <div class="card__btns">
-    <a href="{{ product.get_absolute_url }}" class="card__btns__btn">Подробнее</a>
-    {% if product.id|string_value in cart.cart %}
-          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">Добавлено {{cart|count_items:product.id|string_value}}</a>
-    {% else %}
-          <a href="{% url 'shop:add_to_cart' product.slug %}" class="card__btns__btn">В корзину</a>
-    {% endif %}
+  <div
+    class="{% if category.id|is_even %}cat_cards-2{% else %}cat_cards-1{% endif %}"
+  >
+    <h2>Книги из этой категории:</h2>
+    <div class="cards">
+      {% for product in products %}
+      <div class="card">
+        <div class="card__top">
+          {% if product.image %}
+          <img
+            src="{{ product.image.url }}"
+            class="card-img-top"
+            alt="{{ product.name }}"
+            style="width: 100%; height: 180px; object-fit: cover"
+          />
+          {% else %}
+          <img
+            src="{% static 'img/no_image.png' %}"
+            class="card-img-top"
+            alt="{{ product.name }}"
+            style="width: 100%; height: 180px; object-fit: cover"
+          />
+          {% endif %}
+        </div>
+        <div class="card__bottom">
+          <div class="card__prices">
+            <div class="card__price">{{product.price}}</div>
+            <div class="card__category">{{product.category}}</div>
           </div>
+          <a href="{{ product.get_absolute_url }}" class="card__title">
+            {{product.name}}
+          </a>
+          <div class="card__btns">
+            <a href="{{ product.get_absolute_url }}" class="card__btns__btn"
+              >Подробнее</a
+            >
+            {% if product.id|string_value in cart.cart %}
+            <a
+              href="{% url 'shop:add_to_cart' product.slug %}"
+              class="card__btns__btn"
+              >Добавлено {{cart|count_items:product.id|string_value}}</a
+            >
+            {% else %}
+            <a
+              href="{% url 'shop:add_to_cart' product.slug %}"
+              class="card__btns__btn"
+              >В корзину</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      На даннный момент нет товаров в этой категории.
+      {% endfor %}
+    </div>
   </div>
-</div>
-    {% empty %}
-        На даннный момент нет товаров в этой категории.
-    {% endfor %}
-</div>
-</div>
 </div>
 
 {% if category.image_1 %}
-    <img
-      src="{{ category.image_1.url }}"
-      class="category-img {% if category.id|is_even %}category-img-2{% else %}category-img-1{% endif %}
-      {% if category.name == 'Боевики' %}category-boi
-      {% elif category.name == 'Детективы' %}category-det
-      {% elif category.name == 'Детские книги' %}category-kids
-      {% elif category.name == 'Классика' %}category-cl
-      {% elif category.name == 'Юмористика' %}category-um
-      {% endif %}"
-      alt="{{ category.name }}"
-    />
+<img
+  src="{{ category.image_1.url }}"
+  class="category-img {% if category.id|is_even %}category-img-2{% else %}category-img-1{% endif %} {% if category.name == 'Боевики' %}category-boi {% elif category.name == 'Детективы' %}category-det {% elif category.name == 'Детские книги' %}category-kids {% elif category.name == 'Классика' %}category-cl {% elif category.name == 'Юмористика' %}category-um {% endif %}"
+  alt="{{ category.name }}"
+/>
 {% endif %}
-
 {% if category.image_2 %}
-    <img
-      src="{{ category.image_2.url }}"
-      class="category-img
-      {% if category.name == 'Боевики' %}category-boi-2
-      {% elif category.name == 'Детективы' %}category-det-3
-      {% elif category.name == 'Детские книги' %}category-kids-2
-      {% elif category.name == 'Классика' %}category-cl-2
-      {% elif category.name == 'Любовные романы' %}category-l-2
-      {% elif category.name == 'Приключения' %}category-adv-2
-      {% elif category.name == 'Фантастика' %}category-f-2
-      {% elif category.name == 'Фэнтези' %}category-fen-2
-      {% elif category.name == 'Юмористика' %}category-um-2
-      {% endif %}"
-      alt="{{ category.name }}"
-    />
+<img
+  src="{{ category.image_2.url }}"
+  class="category-img {% if category.name == 'Боевики' %}category-boi-2 {% elif category.name == 'Детективы' %}category-det-3 {% elif category.name == 'Детские книги' %}category-kids-2 {% elif category.name == 'Классика' %}category-cl-2 {% elif category.name == 'Любовные романы' %}category-l-2 {% elif category.name == 'Приключения' %}category-adv-2 {% elif category.name == 'Фантастика' %}category-f-2 {% elif category.name == 'Фэнтези' %}category-fen-2 {% elif category.name == 'Юмористика' %}category-um-2 {% endif %}"
+  alt="{{ category.name }}"
+/>
 {% endif %}
 {% endblock content %}

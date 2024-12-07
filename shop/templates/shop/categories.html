@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}
 <title>Список категорий</title>
-{% endblock title %}
-
-{% block content %}
+{% endblock title %} {% block content %}
 <h2 class="book_h2">Категории</h2>
 <div class="books">
-{% for category in categories %}
-    <a href="{{ category.get_absolute_url }}"><div class="card text-white">
-  <img src="{% static 'img/book.png' %}" class="card-img" alt="...">
-  <div class="card-img-overlay">
-    <h5 class="card-title">{{category.name}}</h5>
-  </div>
-</div></a>
-{% endfor %}
+  {% for category in categories %}
+  <a href="{{ category.get_absolute_url }}"
+    ><div class="card text-white">
+      <img src="{% static 'img/book.png' %}" class="card-img" alt="..." />
+      <div class="card-img-overlay">
+        <h5 class="card-title">{{category.name}}</h5>
+      </div>
+    </div></a
+  >
+  {% endfor %}
 </div>
 {% endblock content %}

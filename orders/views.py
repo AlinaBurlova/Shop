@@ -112,7 +112,11 @@ def order_detail(request, number):
 
     order = get_object_or_404(Order, number=number, user=request.user)
     order_items = order.order_items.all()
-    context = {"order": order, "order_items": order_items}
+    count = 0
+    for item in order_items:
+        count += item.product.price
+
+    context = {"order": order, "order_items": order_items, "count": count}
 
     return render(request, template_name='orders/order_detail.html', context=context)
 

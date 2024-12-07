@@ -1,33 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <h2 class="about-h2">О сайте</h2>
 <div class="about">
-    <img src="{% static 'img/book_about.png' %}" alt="Раскрытая книга">
-    <div class="all-info">
-        <div class="info info-1">
-            <p class="p-top">top-academy</p>
-            <h1>{{ name }}</h1>
-            <p>{{ type }}</p>
-        </div>
-        <div class="info info-2">
-            <p>{{ city }}</p>
-            <p>2024</p>
-        </div>
+  <img src="{% static 'img/book_about.png' %}" alt="Раскрытая книга" />
+  <div class="all-info">
+    <div class="info info-1">
+      <p class="p-top">top-academy</p>
+      <h1>{{ name }}</h1>
+      <p>{{ type }}</p>
     </div>
-        <div class="pr-info">
-        <div class="pr">👩‍💻</div>
-        <div class="info info-pr">
-            <p>{{ pr_lastname }} {{ pr_name }}</p>
-            <p>{{ pr_email }}</p>
-        </div>
+    <div class="info info-2">
+      <p>{{ city }}</p>
+      <p>2024</p>
     </div>
-
-
-
-
+  </div>
+  <div class="pr-info">
+    <div class="pr">👩‍💻</div>
+    <div class="info info-pr">
+      <p>{{ pr_lastname }} {{ pr_name }}</p>
+      <p>{{ pr_email }}</p>
+    </div>
+  </div>
 </div>
-
 
 {% endblock content %}
