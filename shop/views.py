@@ -41,6 +41,7 @@ class ProductListByCategory(ListView):
         categories = Category.objects.all()
         context['categories'] = categories
         context['current_page'] = 'shop:products'
+        context['filterset'] = self.filterset
 
         user = get_user_model()
         admin = user.objects.get(username='staff')
