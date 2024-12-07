@@ -11,7 +11,7 @@ from .models import Product, Category
 from .forms import CategoryCreateForm, ProductCreateForm
 from .filters import ProductFilter
 from django.contrib.auth import get_user_model
-from random import choice 
+from random import shuffle
 
 
 
@@ -102,14 +102,13 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = self.object.category
-        print(category.products.all())
+
         products = []
         for pr in category.products.all():
             if pr != self.object:
                 products.append(pr)
-        
-        
-        # products = choice(products)
+
+        shuffle(products)
         products = products[:2]
         # products = category.products.all()[:2]
         context['products'] = products

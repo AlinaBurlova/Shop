@@ -717,13 +717,17 @@ footer p {
     align-items: center;
 }
 
-.text-field__label {
+.text-field__label, .user-form input {
   display: block;
   margin-bottom: 0.25rem;
   width: 50%;
   font-size: 15px;
-
 }
+
+#id_image {
+    font-size: 12px;
+}
+
 
 input {
   display: block;
@@ -896,10 +900,135 @@ input:focus {
 
 
 
+/* Профиль */
+.user-card {
+    width: 350px;
+    background-color: #efefef;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.user-card .image img {
+    transition: all 0.5s
+}
+
+.user-card:hover .image img {
+    transform: scale(1.5)
+}
+
+.btn-new {
+    height: 140px;
+    width: 140px;
+    border-radius: 50%
+}
+
+.user-card .name {
+    font-size: 15px;
+    font-weight: bold
+}
+
+.user-card .name-1 {
+    font-size: 24px !important;
+    font-weight: bold
+}
+
+.user-card .mail {
+    font-size: 14px;
+    font-weight: 600
+}
+
+.user-card .tel {
+    font-size: 12px
+}
+
+.orders {
+    color: black;
+    text-decoration: none;
+}
+
+.user-card .orders-span {
+    font-size: 22px;
+    font-weight: bold
+}
+
+.user-card .follow {
+    font-size: 12px;
+    font-weight: 500;
+    color: #444444
+}
+
+.user-card .btns {
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.user-card .btn1 {
+    height: 40px;
+    width: fit-content;
+    border: none;
+    color: #fff;
+    font-size: 13.5px;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+}
+
+.user-card .text span {
+    font-size: 13px;
+    color: #545454;
+    font-weight: 500
+}
+
+.user-card .icons i {
+    font-size: 19px
+}
+
+.user-card hr .new1 {
+    border: 1px solid
+}
+
+.user-card .join {
+    font-size: 14px;
+    color: #a0a0a0;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+}
+
+.user-card .date {
+    background-color: #ccc
+}
+
+/* Конец профиля */
 
 
+.password-h2 {
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 50px !important;
+    text-align: center;
+}
 
+.password-form {
+    width: 55%;
+    margin: 0 auto;
+}
 
+.one-book-card [
+    width: 95% !important;
+    margin: 0 auto;
+    min-height: 0;
+}
+
+.one-book-card button {
+    width: fit-content;
+}
+
+.book-line {
+    display: flex;
+    justify-content: space-between;
+}
 
 
 /* Стили для скролла */
@@ -974,6 +1103,10 @@ input:focus {
     .cart-detail tbody td {
         font-size: 10px;
     }
+
+    #id_image {
+        font-size: 8px;
+    }
 }
 
 @media screen and (max-width: 970px) {
@@ -1040,7 +1173,7 @@ input:focus {
         font-size: .5rem !important;
     }
 
-    .order-price, .order-choice, .order-choice button, .modal-choice input[type="button"]{
+    .order-price, .order-choice, .order-choice button, .modal-choice input[type="button"] {
         font-size: .5rem !important;
     }
 
@@ -1053,7 +1186,7 @@ input:focus {
         margin-top: 11px !important;
     }
 
-    .modal-content-my a, .user-form button {
+    .modal-content-my a, .user-form button, .password-form button {
         font-size: .7rem !important;
     }
 
@@ -1133,6 +1266,10 @@ input:focus {
         font-size: 7px;
     }
 
+    #id_image {
+        font-size: 6px;
+    }
+
 }
 
 
@@ -1175,7 +1312,9 @@ input:focus {
         --bs-dropdown-min-width: 10rem !important;
     }
 
-
+    #id_image {
+        font-size: 4.5px;
+    }
 
 }
 
@@ -1204,6 +1343,10 @@ input:focus {
 
     .page-item:nth-of-type(1), .page-item:nth-of-type(4) {
         display: none;
+    }
+
+    #id_image {
+        font-size: 7px;
     }
 }
 
@@ -1259,7 +1402,7 @@ input:focus {
         margin-top: 14px !important;
     }
 
-    .modal-content-my a, .user-form button {
+    .modal-content-my a, .user-form button, .password-form button {
         font-size: .5rem !important;
     }
 
@@ -1324,7 +1467,7 @@ font-size: 12px;
   max-width: 200px;
   }
 
-  .book_h2, .order-h2, .about-h2, .cart-h2  {
+  .book_h2, .order-h2, .about-h2, .cart-h2 {
     text-align: center;
   }
 
@@ -1345,7 +1488,7 @@ font-size: 12px;
         font-size: 1.5rem;
     }
 
-    .text-field__label {
+    .text-field__label, .user-form input, .password-form input {
         font-size: 10px;
     }
 
@@ -1354,8 +1497,8 @@ font-size: 12px;
         font-size: 17px;
     }
 
-    .user-form input {
-        padding: 0px 0px;
+    .user-form input, .password-form input {
+        padding: 0.2rem 0.75rem;
     }
 
     .page-link {
@@ -1372,6 +1515,16 @@ font-size: 12px;
         gap: 3.5px;
     }
 
+    #id_image {
+        font-size: 3px;
+    }
+    .user-card {
+        width: max-content;
+    }
+
+    .user-card .btn1 {
+        font-size: 11px;
+    }
 
 }
 
@@ -1520,7 +1673,7 @@ font-size: 12px;
         font-size: 9px;
     }
 
-    .text-field__label {
+    .text-field__label, .user-form input, .password-form input, .password-form input {
         font-size: 7px;
     }
 
@@ -1540,7 +1693,7 @@ font-size: 12px;
         margin-top: 15px !important;
     }
 
-    .modal-content-my a, .user-form button {
+    .modal-content-my a, .user-form button, .password-form button {
         font-size: .4rem !important;
     }
 
@@ -1552,6 +1705,38 @@ font-size: 12px;
         width: 72%;
     }
 
+    .user-card {
+        width: 200px;
+    }
+
+    .user-card .name-1 {
+        font-size: 21px !important;
+    }
+
+    .user-card .name {
+        font-size: 12px;
+    }
+
+    .user-card .mail {
+        font-size: 11px;
+    }
+
+    .user-card .tel {
+        font-size: 9px;
+    }
+
+    .user-card .orders-span {
+        font-size: 19px;
+    }
+
+    .user-card .btn1 {
+        font-size: 9px;
+    }
+
+
+    .user-card .join {
+        font-size: 8px;
+    }
 }
 
 

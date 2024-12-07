@@ -8,6 +8,8 @@ from django.contrib import messages
 from website_shop.settings import LOGIN_REDIRECT_URL
 from .forms import UserRegistrationForm, ChangePasswordForm, UserProfileForm
 
+from orders.models import Order
+
 User = get_user_model()
 
 
@@ -53,11 +55,15 @@ def log_out(request):
 @login_required
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
+    orders = Order.objects.filter(user=user)
+    order_count = orders.count()
+
     if request.user != user:
         raise PermissionDenied()
     context = {
         'user': user,
         'title': 'Информация о профиле',
+        'order_count': order_count,
     }
     return render(request, template_name='users/profile.html', context=context)
 
@@ -91,7 +97,7 @@ def change_password(request):
 def change_profile(request):
     user = request.user
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             user = form.save(commit=False)
             form.save()

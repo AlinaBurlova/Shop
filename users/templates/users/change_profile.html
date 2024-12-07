@@ -4,13 +4,21 @@
 {% endblock title %}
 
 {% block content %}
-    <h2>{{ title }}</h2>  <!-- Заголовок страницы -->
+
+<h2 class="user-p">{{ title }}</h2>
 
 <div class="container">
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="user-form">
         {% csrf_token %}
-        {{ form.as_p }}
+            <div class="fields">
+			{% for field in form %}
+			<div class="text-field">
+				<span class="text-field__label">{{field.label_tag}}</span>
+				{{field}}
+			</div>
+			{% endfor %}
+	</div>
 
         <button type="submit" class="btn btn-primary">Сохранить изменения</button>  <!-- Кнопка для отправки формы -->
     </form>
